@@ -14,7 +14,7 @@ class TestContains {
     }
     @Test
     fun test_middle() {
-        assertTrue( contains(a, a.size/2))
+        assertTrue( contains(a, a.size/2) )
     }
 
     @Test

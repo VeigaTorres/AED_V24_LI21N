@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 class TestFibonnaci {
 
-    val fibonnaciFunction:(Int)-> Int = ::fibonacciMemoryN
+    val fibonnaciFunction:(Int)-> Int = ::fibonacciRecursive
     @Test
     fun testFirsts(){
         assertEquals(0, fibonnaciFunction(0))
