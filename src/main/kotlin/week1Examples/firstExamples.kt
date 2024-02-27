@@ -9,6 +9,7 @@ package week1Examples
  * Verify if the array contains the value.
  * @param array the array to be verified
  * @param value the value to be verified
+ * @return true if the value is in the array, false otherwise
  */
 fun contains( array: Array<Int>, value: Int ): Boolean {
     for(v in array){
