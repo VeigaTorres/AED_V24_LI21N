@@ -37,12 +37,12 @@ class TestMaximumSubArray {
     @Test
     fun test1() {
         val a =Array(20000){ -5.0 }
-        maximumSubArray( a , 0, a.size-1)
+        maxSubArray( a , 0, a.size-1)
     }
 
     @Test
     fun test2() {
         val a =Array(1000000){ -5.0 }
-        maximumSubArray( a , 0, a.size-1)
+        maxSubArray( a , 0, a.size-1)
     }
 }

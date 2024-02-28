@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class TestPower {
-    val power:(Int, Int)-> Int = ::powerOfIterative
+    val power:(Int, Int)-> Int = ::powerOf
     @Test
     fun testExpoent0() {
         assertEquals(1, power( 2, 0))
@@ -20,7 +20,7 @@ class TestPower {
     @Test
     fun test() {
         for( i in 1 .. 1000000)
-           power( 3, 50000)
+           power( 3, 500000)
     }
 
 }

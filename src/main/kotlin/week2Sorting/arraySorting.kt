@@ -12,14 +12,27 @@ fun Array<Int>.exchange(i1: Int, i2: Int) {
  *      Fo each iteration take one value at a time from the unsorted part of the array
  *      and insert it in the correct position in the sorted part of the array.
  * Complexity in terms of time:
- *  worst case -
- *  best case -
+ *  worst case - O(n^2)
+ *  best case - O(n)
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param right - index where the subarray ends (inclusive)
  */
 fun insertionSort(a:Array<Int>, left:Int=0, right: Int=a.size-1) {
-    TODO()
+    /* In each iteration:
+     *   The left to j-1 is the sorted part of the array
+     *   The j to right is the unsorted part of the array
+     *   The element a[j] is inserted in the correct position in the sorted part of the array
+     */
+    for( j in left+1 .. right) {
+       // Modify: Use left shift instead of exchange
+       for ( i in j downTo left+1) {
+           if ( a[i]< a[i-1])
+              a.exchange(i, i -1)
+           else
+               break
+       }
+    }
 }
 
 /*

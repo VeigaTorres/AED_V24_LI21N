@@ -12,7 +12,7 @@ package week1Examples
  * Depth of the recursion: n
  * Complexity:
  *  in terms of time - 2^n (exponecial)
- *  in terms of extra space - n (linear
+ *  in terms of extra space - n (linear)
  */
 fun fibonacciRecursive( n: Int ) : Int  {
     return if(n == 0) 0
@@ -26,11 +26,24 @@ fun fibonacciRecursive( n: Int ) : Int  {
  *  in terms of time - O(n)
  *  in terms of extra space -O(n)
  */
-fun fibonacciMemoryN( n:Int ): Int = TODO()
+fun fibonacciMemoryN( n:Int ): Int {
+    if ( n < 2 ) return n
+    val array= Array<Int>(n+1){0} // Extra space n
+    array[1]= 1
+    for( i in 2 until array.size)
+        array[i] = array[i-1] + array[i-2]
+    return array[n]
+}
 
 /**
  * Complexity:
  *  in terms of time - O(n)
  *  in terms of extra space - O(1)
  */
-fun fibonacci( n:Int ): Int = TODO()
+fun fibonacci( n:Int ): Int  {
+   // The dimension of the array is 2 independent of the value of n,
+   // then extra space is constant.
+   val array = arrayOf( 0, 1 )
+   TODO()
+   return array[1]
+}
