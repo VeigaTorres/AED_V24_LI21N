@@ -26,8 +26,8 @@ fun powerOfIterative(base: Int, exponent: Int ) : Int {
  *      in terms of extra space - O(n)
  */
 fun powerOfRecursive(base: Int, exponent: Int ) : Int {
-    return if (exponent == 0)  1
-           else base *powerOfRecursive(base, exponent - 1)
+    if (exponent == 0)  return 1
+    return base * powerOfRecursive(base, exponent - 1)
 }
 
 /**
@@ -40,15 +40,16 @@ fun powerOfRecursive(base: Int, exponent: Int ) : Int {
  *      in terms of time - O(n)
  *      in terms of extra space - O(lg n)
  */
-fun powerOfN(number: Int, exponent: Int ) : Int  {
+fun powerOfN(base: Int, exponent: Int ) : Int  {
     if (exponent == 0 ) return 1
     else if( exponent % 2 == 0 )
-        return powerOfN(number, exponent/2)* powerOfN(number, exponent/2)
+        return powerOfN(base, exponent/2)* powerOfN(base, exponent/2)
     else
-        return number* powerOfN(number, exponent/2)* powerOfN(number, exponent/2)
+        return base* powerOfN(base, exponent/2)* powerOfN(base, exponent/2)
 }
 
 /**
+ *  * Depth of the recursion: lg n
  * Complexity:
  *      in terms of time - O(lg n)
  *      in terms of extra space - O(lg n)

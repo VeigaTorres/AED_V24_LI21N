@@ -28,7 +28,7 @@ class TestSearch  {
     }
 
     @Test
-    fun testAllSearchBinarySearch() {
+    fun testAllSearchBinary() {
         a.sort()
         searchAll(a, ::searchBinary)
     }

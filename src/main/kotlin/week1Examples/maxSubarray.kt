@@ -3,6 +3,8 @@ package week1Examples
 /**
  * Find the subarray (l,r) in the array that has the maximum sum.
  * @param array the array to be verified
+ * @param left the left index of the array
+ * @param right the right index of the array
  * @return the Triple (l, r, sum)
  */
 /**

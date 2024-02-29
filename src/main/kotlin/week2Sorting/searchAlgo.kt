@@ -2,28 +2,38 @@ package week2Sorting
 
 /**
  * Verify if the subarray contains the value.
- * Complexity in terms of time:
- *  worst case -
- *  best case -
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param right - index where the subarray ends (inclusive)
  * @return true if the value is in the array, false otherwise
  */
+/*
+  * Complexity in terms of time:
+ *  worst case - O(n)
+ *  best case - O(1)
+ */
 fun search(a: Array<Int>, value: Int,
-           left: Int=0, right: Int=a.size-1): Boolean = TODO()
+           left: Int=0, right: Int=a.size-1): Boolean {
+    for (i in left .. right)
+        if (a[i] == value) return true
+    return false
+}
 
 /**
  * Verify if the subarray contains the value. Recursive version
  * Methodology - If the value not is the first to the left, search
  *    in the right subarray.
- * Depth of the recursion:
+ * Depth of the recursion: O(N
  * Complexity:
- *  in terms of time -
- *  in terms of extra space -
+ *  in terms of time - O(n)
+ *  in terms of extra space - O(n)
  */
-fun searchTailRecursive(array: Array<Int>, value: Int,
-                    left: Int=0, right: Int = array.size-1): Boolean = TODO()
+tailrec fun searchTailRecursive(array: Array<Int>, value: Int,
+                    left: Int=0, right: Int = array.size-1): Boolean
+    = if (left > right) false
+      else if(array[left] == value) true
+      else searchTailRecursive(array, value, left+1, right)
+
 
 
 /**
@@ -31,26 +41,40 @@ fun searchTailRecursive(array: Array<Int>, value: Int,
  * Methodology - If the value is not the middle value and if not exist
  *      in the first half of the subarray, search in the second half
  *      of the subarray.
- * Depth of the recursion:
+ * Depth of the recursion: lg N
  * Complexity:
- *  in terms of time -
- *  in terms of extra space -
+ *  in terms of time - O(N)
+ *  in terms of extra space - O(lg N)
  */
 fun searchRecursive(array: Array<Int>, value: Int,
-                    left: Int=0, right: Int = array.size-1): Boolean = TODO()
+                    left: Int=0, right: Int = array.size-1): Boolean {
+    if( left > right) return false
+    val m = (left + right) ushr 1  // left + (right-left)/2
+    if ( array[m] == value ) return true
+    return searchRecursive( array, value, left, m-1) ||
+           searchRecursive( array, value, m+1, right)
+}
 
 /**
  * Verify if the sorted subarray contains the value. Recursive version
  * Methodology - If the value is not the middle value, search the value in
- * first half of the subarray OR in the second half of the subarray depending
- * on the value is less or greater than the middle value.
- * Depth of the recursion:
+ *     first half of the subarray OR in the second half of the subarray depending
+ *     on the value is less or greater than the middle value.
+ * Depth of the recursion: O(lg n
  * Complexity:
- *  in terms of time -
- *  in terms of extra space -
+ *  in terms of time - O(lg n)
+ *  in terms of extra space - O(lg n)
  */
-fun searchBinaryRecursive(sortedArray: Array<Int>, value: Int,
-                          left: Int=0, right: Int=sortedArray.size-1): Boolean = TODO()
+tailrec fun searchBinaryRecursive(sortedArray: Array<Int>, value: Int,
+                                  left: Int=0, right: Int=sortedArray.size-1): Boolean {
+
+    if( left > right) return false
+    val m = (left + right) ushr 1  //left + (right-left) / 2
+    if ( sortedArray[m] == value ) return true
+    return if (sortedArray[m] > value )
+              searchBinaryRecursive( sortedArray, value, left, m-1)
+           else searchBinaryRecursive( sortedArray, value, m+1, right)
+}
 
 /**
  * Verify if the sorted subarray contains the value. Iterative version.

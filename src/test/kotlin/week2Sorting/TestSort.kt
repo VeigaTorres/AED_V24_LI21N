@@ -9,6 +9,7 @@ import kotlin.test.*
     fun sortArray( a: Array<Int>, l: Int, r: Int ) =
         insertionSort(a,l, r)
         //insertionSort(a,l, r, Int::compareTo)
+        //bubbleSort(a, l, r)
         //bubbleSortFlag(a, l, r)
         //selectionSort(a, l, r)
         //mergeSort(a, l, r)

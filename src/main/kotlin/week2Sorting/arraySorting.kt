@@ -26,10 +26,11 @@ fun insertionSort(a:Array<Int>, left:Int=0, right: Int=a.size-1) {
      */
     for( j in left+1 .. right) {
        // Modify: Use left shift instead of exchange
+       val key = a[j]
        for ( i in j downTo left+1) {
-           if ( a[i]< a[i-1])
+           if ( a[i] < a[i-1])
               a.exchange(i, i -1)
-           else
+            else
                break
        }
     }
@@ -48,14 +49,17 @@ fun sortDeCrescent( a: Array<Int>) { TODO() }
  *      beginning, compares the current element with the previous one, and if
  *      the current element is smaller, it exchanges the two elements.
  * Complexity in terms of time:
- *  worst case -
- *  best case -
+ *  worst case - O(n^2)
+ *  best case - O(n^2)
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param right - index where the subarray ends (inclusive)
  */
 fun bubbleSort(a:Array<Int>, left: Int=0, right: Int=a.size-1) {
-    TODO()
+    for( i in left ..< right)
+        for( j in right downTo i+1)
+            if ( a[j] < a [j-1])
+                a.exchange(j, j-1)
 }
 
 /**
@@ -63,28 +67,45 @@ fun bubbleSort(a:Array<Int>, left: Int=0, right: Int=a.size-1) {
  * Methodology - When it detects that it is already sorted (not exist exchanges
  *               in the last iteration) it ends the sorting.
  * Complexity in terms of time:
- *  worst case -
- *  best case -
+ *  worst case - o(n^2)
+ *  best case - O(n)
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param right - index where the subarray ends (inclusive)
  */
 fun bubbleSortFlag(a:Array<Int>, left: Int=0, right: Int=a.size-1) {
-    TODO()
+    var swap = true
+    var i = left
+    while (i < right && swap ) {
+        swap = false
+        for( j in right downTo i +1){
+            if ( a[j] < a[j-1]) {
+                swap = true
+                a.exchange( j, j-1)
+            }
+        }
+    }
 }
 
 /**
  * Sort an subarray using the selection sort algorithm. The algorithm not is stable.
  * Methodology - for each iteration SELECT the smallest
  * Complexity in terms of time:
- *  worst case -
- *  best case -
+ *  worst case - O(n^2)
+ *  best case - O(n^2)
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param right - index where the subarray ends (inclusive)
  */
 fun selectionSort(a:Array<Int>, left: Int=0, right: Int=a.size-1) {
-    TODO()
+    for( i in left ..< right) {
+        var il = i
+        for( j in i+1 .. right) {
+            if (a[il] > a[j])
+                il = j
+        }
+        a.exchange(i, il)
+    }
 }
 
 /**

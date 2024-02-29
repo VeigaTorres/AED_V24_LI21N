@@ -19,8 +19,7 @@ class TestPower {
      }
     @Test
     fun test() {
-        for( i in 1 .. 1000000)
-           power( 3, 500000)
+        power( 3, 1536000000)
     }
 
 }
