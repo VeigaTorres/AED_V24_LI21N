@@ -1,5 +1,5 @@
 package week2Sorting
-fun Array<Int>.exchange(i1: Int, i2: Int) {
+fun <T> Array<T>.exchange(i1: Int, i2: Int) {
     val aux = this[i1]
     this[i1] = this[i2]
     this[i2] = aux
@@ -36,17 +36,37 @@ fun insertionSort(a:Array<Int>, left:Int=0, right: Int=a.size-1) {
     }
 }
 
-/*
-fun insertionSort(a:Array<Int>, left:Int=0, right: Int=a.size-1,
-                  compare: (Int,Int)-> Int) { TODO() }
-fun sortCrescent( a: Array<Int> ) { TODO() }
-fun sortDeCrescent( a: Array<Int>) { TODO() }
-*/
+fun <T> insertionSort( a:Array<T>, left:Int=0, right: Int=a.size-1,
+                       compare: (T, T)-> Int) {
+    /* In each iteration:
+     *   The left to j-1 is the sorted part of the array
+     *   The j to right is the unsorted part of the array
+     *   The element a[j] is inserted in the correct position in the sorted part of the array
+     */
+    for( j in left+1 .. right) {
+        // Modify: Use left shift instead of exchange
+        val key = a[j]
+        for ( i in j downTo left+1) {
+            if ( compare(a[i], a[i-1]) < 0)
+                a.exchange(i, i -1)
+            else
+                break
+        }
+    }
+}
+
+fun sortCrescent( a: Array<Int> ) {
+    insertionSort(a, 0, a.size-1, { i1, i2 -> i1.compareTo(i2)})
+}
+fun sortDeCrescent( a: Array<Int>) {
+    insertionSort(a, 0, a.size-1, { i1, i2 -> -i1.compareTo( i2 )})
+//    insertionSort(a, 0, a.size-1, { i1, i2 -> i2.compareTo(i1) })
+}
 
 /**
  * Sort an subarray using the bubble sort algorithm. The algorithm is stable.
  * Methodology - for each iteration, transverse the array from the end to the
- *      beginning, compares the current element with the previous one, and if
+ *      beginning, compares the current element {with the previous one, and if
  *      the current element is smaller, it exchanges the two elements.
  * Complexity in terms of time:
  *  worst case - O(n^2)
@@ -114,26 +134,45 @@ fun selectionSort(a:Array<Int>, left: Int=0, right: Int=a.size-1) {
  *   It divides the array in two halves, sorts the two halves and
  *   then merges the two sorted halves.
  * Complexity in terms of time:
- *  worst case -
- *  best case -
+ *  worst case - n lg n
+ *  best case - n lg n
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param right - index where the subarray ends (inclusive)
  */
 fun mergeSort(a:Array<Int>, left: Int=0, right: Int = a.size-1 )  {
-    TODO()
+  if ( left < right) {
+      val m =(left+ right) ushr 1
+      mergeSort(a, left, m)
+      mergeSort(a, m+1, right)
+      merge( a, left, m, right )
+  }
 }
 /**
  * Take two sorted subarrays and merge them into a single sorted subarray.
  * First subarray is a[left .. m] and the second subarray is a[m+1..right]
  * Complexity in terms of time:
- *  worst case -
- *  best case -
+ *  worst case - O(n)
+ *  best case - O(n)
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param m - index where the first subarray ends (inclusive)
  * @param right - index where the subarray ends (inclusive)
  */
 fun merge(a: Array<Int>, left: Int, m: Int, right: Int) {
-    TODO()
+  val al = a.copyOfRange(left, m+1)
+  val ar = a // a.copyOfRange(m+1, right+1)
+  var i = left
+  var il = 0
+  var ir = m+1 // 0
+  //  while ( il < al.size && ir < ar.size)   {
+  while ( il < al.size && ir <= right)   {
+            if ( al[il] <= ar[ir])
+          a[i++] = al[il++]
+      else
+          a[i++] = ar[ir++]
+  }
+    if (il < al.size )
+        al.copyInto(a, i, il)
+//    else ar.copyInto(a, i, ir)
 }

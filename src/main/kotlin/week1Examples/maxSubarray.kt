@@ -6,8 +6,6 @@ package week1Examples
  * @param left the left index of the array
  * @param right the right index of the array
  * @return the Triple (l, r, sum)
- */
-/**
  *  Complexity:
  *      in terms of time - O(n^2)
  *      in terms of extra space - O(1)

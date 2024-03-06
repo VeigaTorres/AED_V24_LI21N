@@ -67,7 +67,6 @@ fun searchRecursive(array: Array<Int>, value: Int,
  */
 tailrec fun searchBinaryRecursive(sortedArray: Array<Int>, value: Int,
                                   left: Int=0, right: Int=sortedArray.size-1): Boolean {
-
     if( left > right) return false
     val m = (left + right) ushr 1  //left + (right-left) / 2
     if ( sortedArray[m] == value ) return true
@@ -83,7 +82,20 @@ tailrec fun searchBinaryRecursive(sortedArray: Array<Int>, value: Int,
  *  in terms of extra space -
  */
 fun searchBinary(sortedArray: Array<Int>, value: Int,
-                 left: Int=0, right: Int=sortedArray.size-1): Boolean = TODO()
+                 left: Int=0, right: Int=sortedArray.size-1): Boolean {
+    var l= left
+    var r = right
+    while ( l <=  r ) {
+        val m = (l+r) ushr 1
+        if ( value == sortedArray[m]) return true
+        if ( value < sortedArray[m])
+            r= m-1
+        else
+            l = m+1
+    }
+    return false
+
+}
 
 /**
  * Return the index to the first value, in the sorted subarray, wich has
@@ -92,7 +104,18 @@ fun searchBinary(sortedArray: Array<Int>, value: Int,
  *  in terms of time -
  *  in terms of extra space -
  */
-fun lowerBound(sortedArray: Array<Int>,value: Int, left: Int=0, right: Int=sortedArray.size-1): Int = TODO()
+fun lowerBound(sortedArray: Array<Int>,value: Int, left: Int=0, right: Int=sortedArray.size-1): Int {
+    var l= left
+    var r = right
+    while ( l <=  r ) {
+        val m = (l+r) ushr 1
+        if ( value <= sortedArray[m])
+            r= m-1
+        else
+            l = m+1
+    }
+    return l
+}
 
 /**
 * Return the index to the first value, in the sorted subarray, that is greater than value.

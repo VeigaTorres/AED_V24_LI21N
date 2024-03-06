@@ -5,8 +5,6 @@ package week1Examples
  * @param base the number to be raised
  * @param exponent the exponent
  * @return the number raised to the exponent
- */
-/*
  *  Complexity:
  *      in terms of time - O(n)
  *      in terms of extra space - O(1)
@@ -16,7 +14,7 @@ fun powerOfIterative(base: Int, exponent: Int ) : Int {
     for( e in 1 .. exponent)
         res*= base
 
-    return res;
+    return res
 }
 
 /**

@@ -1,9 +1,5 @@
 package week1Examples
 
-import week1Examples.fibonacci
-import week1Examples.fibonacciMemoryN
-import week1Examples.fibonacciRecursive
-
 /**
  * Evaluate the time of the function.
  * 1. Print the identifier of the function;
