@@ -23,16 +23,17 @@ fun search(a: Array<Int>, value: Int,
  * Verify if the subarray contains the value. Recursive version
  * Methodology - If the value not is the first to the left, search
  *    in the right subarray.
- * Depth of the recursion: O(N
+ * Depth of the recursion: O(N)
  * Complexity:
  *  in terms of time - O(n)
  *  in terms of extra space - O(n)
+ * Recurrence: C(0) = O(1); C(n) = O(1) + C(n-1)
  */
 tailrec fun searchTailRecursive(array: Array<Int>, value: Int,
                     left: Int=0, right: Int = array.size-1): Boolean
-    = if (left > right) false
-      else if(array[left] == value) true
-      else searchTailRecursive(array, value, left+1, right)
+    = if (left > right) false                                       //O(1)
+      else if(array[left] == value) true                            //O(1)
+      else searchTailRecursive(array, value, left+1, right)     //C(n-1)
 
 
 
@@ -45,14 +46,15 @@ tailrec fun searchTailRecursive(array: Array<Int>, value: Int,
  * Complexity:
  *  in terms of time - O(N)
  *  in terms of extra space - O(lg N)
+ *  Recurrence: C(0) = O(1); C(n) = O(1) + 2 x C(n/2)
  */
 fun searchRecursive(array: Array<Int>, value: Int,
                     left: Int=0, right: Int = array.size-1): Boolean {
-    if( left > right) return false
+    if( left > right) return false                               // O(1)
     val m = (left + right) ushr 1  // left + (right-left)/2
     if ( array[m] == value ) return true
-    return searchRecursive( array, value, left, m-1) ||
-           searchRecursive( array, value, m+1, right)
+    return searchRecursive( array, value, left, m-1) ||     // C(n/2)
+           searchRecursive( array, value, m+1, right)        // C(n/2)
 }
 
 /**
@@ -64,15 +66,17 @@ fun searchRecursive(array: Array<Int>, value: Int,
  * Complexity:
  *  in terms of time - O(lg n)
  *  in terms of extra space - O(lg n)
+ *  Recurrence: O(1) + C(n/2)
  */
 tailrec fun searchBinaryRecursive(sortedArray: Array<Int>, value: Int,
                                   left: Int=0, right: Int=sortedArray.size-1): Boolean {
-    if( left > right) return false
+    if( left > right) return false                              //O(1)
     val m = (left + right) ushr 1  //left + (right-left) / 2
     if ( sortedArray[m] == value ) return true
     return if (sortedArray[m] > value )
-              searchBinaryRecursive( sortedArray, value, left, m-1)
-           else searchBinaryRecursive( sortedArray, value, m+1, right)
+              searchBinaryRecursive( sortedArray, value, left, m-1)     //C(n/2)
+           else                                                              // ou
+              searchBinaryRecursive( sortedArray, value, m+1, right)     //C(n/2)
 }
 
 /**

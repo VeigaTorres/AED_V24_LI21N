@@ -1,4 +1,7 @@
 package week2Sorting
+
+import kotlin.math.min
+
 fun <T> Array<T>.exchange(i1: Int, i2: Int) {
     val aux = this[i1]
     this[i1] = this[i2]
@@ -128,6 +131,20 @@ fun selectionSort(a:Array<Int>, left: Int=0, right: Int=a.size-1) {
     }
 }
 
+/*
+   Recurrence:
+ */
+tailrec fun selectionSortRecursive( a:Array<Int>, left:Int=0, right: Int=a.size-1) {
+    if (left >= right) return
+    var il = left
+    for( j in left+1 .. right) {
+        if (a[il] > a[j])
+            il = j
+    }
+    a.exchange(left, il)
+    selectionSortRecursive(a, left+1, right)
+}
+
 /**
  * Sort an subarray using the merge sort algorithm. The algorithm is stable.
  * Methodology - Divide and conquer algorithm.
@@ -136,9 +153,11 @@ fun selectionSort(a:Array<Int>, left: Int=0, right: Int=a.size-1) {
  * Complexity in terms of time:
  *  worst case - n lg n
  *  best case - n lg n
+ * Complexity in terms of extra space - O(n)
  * @param a - array
  * @param left - index where the subarray starts (inclusive)
  * @param right - index where the subarray ends (inclusive)
+ * Recurrence:
  */
 fun mergeSort(a:Array<Int>, left: Int=0, right: Int = a.size-1 )  {
   if ( left < right) {
@@ -175,4 +194,25 @@ fun merge(a: Array<Int>, left: Int, m: Int, right: Int) {
     if (il < al.size )
         al.copyInto(a, i, il)
 //    else ar.copyInto(a, i, ir)
+}
+
+/**
+ * Merge sort algorithm using the bottom-up approach.
+ * Complexity in terms of time:
+ *  worst case - O(n lg n)
+ *  best case - O(n lg n)
+ * Complexity in terms of extra space - O(n)
+ * @param a - array
+ * @param left - index where the subarray starts (inclusive)
+ * @param right - index where the subarray ends (inclusive)
+ */
+fun mergeSortButtonUp(a: Array<Int>,l: Int,r: Int){
+    var m = 1
+    while (m <= r-l) {
+        var i = l
+        for (i in l .. r - m step 2*m) {
+            merge(a, i, i + m - 1, min(r, i + 2 * m - 1))
+        }
+        m += m
+    }
 }

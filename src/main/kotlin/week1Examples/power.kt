@@ -22,6 +22,7 @@ fun powerOfIterative(base: Int, exponent: Int ) : Int {
  * Complexity:
  *      in terms of time - O(n)
  *      in terms of extra space - O(n)
+ * Recurrence: C(0) = O(1); C(n) = O(1) + C(n-1)
  */
 fun powerOfRecursive(base: Int, exponent: Int ) : Int {
     if (exponent == 0)  return 1
@@ -37,13 +38,16 @@ fun powerOfRecursive(base: Int, exponent: Int ) : Int {
  * Complexity:
  *      in terms of time - O(n)
  *      in terms of extra space - O(lg n)
+ * Recurrence: C(0) = O(1); C(n) = O(1) + 2xC(n/2)
  */
 fun powerOfN(base: Int, exponent: Int ) : Int  {
-    if (exponent == 0 ) return 1
+    if (exponent == 0 ) return 1                    // O(1)
     else if( exponent % 2 == 0 )
-        return powerOfN(base, exponent/2)* powerOfN(base, exponent/2)
+        return powerOfN(base, exponent/2)*  // C(n/2)
+               powerOfN(base, exponent/2)   // C(n/2)
     else
-        return base* powerOfN(base, exponent/2)* powerOfN(base, exponent/2)
+        return base* powerOfN(base, exponent/2)*
+               powerOfN(base, exponent/2)
 }
 
 /**
@@ -51,12 +55,13 @@ fun powerOfN(base: Int, exponent: Int ) : Int  {
  * Complexity:
  *      in terms of time - O(lg n)
  *      in terms of extra space - O(lg n)
+ * Recurrence: C(0) = O(1); C(n) = O(1) + C(n/2)
  */
-fun powerOf( number: Int, exponent: Int ) : Int  {
-    if (exponent == 0 ) return 1
+fun powerOf(number: Int, exponent: Int) : Int  {
+    if (exponent == 0 ) return 1                        // O(1)
     else {
-        val aux = powerOf(number, exponent / 2)
-        if (exponent % 2 == 0)
+        val aux = powerOf(number, exponent / 2) // C(n/2)
+        if (exponent % 2 == 0)                          // O(1)
             return aux * aux
         else
             return number * aux * aux
