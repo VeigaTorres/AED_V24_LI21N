@@ -18,7 +18,7 @@ fun powerOfIterative(base: Int, exponent: Int ) : Int {
 }
 
 /**
- * Depth of the recursion:
+ * Depth of the recursion: n
  * Complexity:
  *      in terms of time - O(n)
  *      in terms of extra space - O(n)

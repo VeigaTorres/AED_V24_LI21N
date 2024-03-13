@@ -23,7 +23,7 @@ fun search(a: Array<Int>, value: Int,
  * Verify if the subarray contains the value. Recursive version
  * Methodology - If the value not is the first to the left, search
  *    in the right subarray.
- * Depth of the recursion: O(N)
+ * Depth of the recursion: n
  * Complexity:
  *  in terms of time - O(n)
  *  in terms of extra space - O(n)
@@ -62,11 +62,11 @@ fun searchRecursive(array: Array<Int>, value: Int,
  * Methodology - If the value is not the middle value, search the value in
  *     first half of the subarray OR in the second half of the subarray depending
  *     on the value is less or greater than the middle value.
- * Depth of the recursion: O(lg n
+ * Depth of the recursion: lg n
  * Complexity:
  *  in terms of time - O(lg n)
  *  in terms of extra space - O(lg n)
- *  Recurrence: O(1) + C(n/2)
+ *  Recurrence: C(0) = O(1); C(n) = O(1) + C(n/2)
  */
 tailrec fun searchBinaryRecursive(sortedArray: Array<Int>, value: Int,
                                   left: Int=0, right: Int=sortedArray.size-1): Boolean {
@@ -82,8 +82,8 @@ tailrec fun searchBinaryRecursive(sortedArray: Array<Int>, value: Int,
 /**
  * Verify if the sorted subarray contains the value. Iterative version.
  * Complexity:
- *  in terms of time -
- *  in terms of extra space -
+ *  in terms of time - O(lg n)
+ *  in terms of extra space - O(1)
  */
 fun searchBinary(sortedArray: Array<Int>, value: Int,
                  left: Int=0, right: Int=sortedArray.size-1): Boolean {
@@ -105,8 +105,8 @@ fun searchBinary(sortedArray: Array<Int>, value: Int,
  * Return the index to the first value, in the sorted subarray, wich has
  * a value not less than value (equal or greater than value).
  * Complexity:
- *  in terms of time -
- *  in terms of extra space -
+ *  in terms of time -O(lg n)
+ *  in terms of extra space - O(1)
  */
 fun lowerBound(sortedArray: Array<Int>,value: Int, left: Int=0, right: Int=sortedArray.size-1): Int {
     var l= left
