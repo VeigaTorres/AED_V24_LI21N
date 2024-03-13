@@ -14,7 +14,6 @@ package week4Heap
 class PriorityQueue<T> (capacity:Int, val comparator:(T, T)-> Int)  {
     private val heap:Array<T> = arrayOfNulls<Any>(capacity) as Array<T>
     private var heapSize= 0
-
     fun size():Int  = TODO()
     
     fun isEmpty(): Boolean = TODO()

@@ -35,7 +35,7 @@ fun right(i: Int): Int = (i shl 1) + 2
  */
 fun <T>  maxHeapify(heap: Array<T>, heapSize: Int, i: Int,
                             compare: (T, T)-> Int) {
-    TODO()
+  TODO()
 }
 
 /**
@@ -48,10 +48,7 @@ fun <T>  maxHeapify(heap: Array<T>, heapSize: Int, i: Int,
  */
 fun <T> minHeapify(heap: Array<T>, heapSize: Int, i: Int,
                    compare: (T, T)-> Int) {
-
-    maxHeapify(heap, heapSize,i ){
-            a, b -> compare( b, a)
-    }
+    TODO()
 }
 
 /**
@@ -104,9 +101,9 @@ fun <T> heapIncreaseKey(heap: Array<T>, i: Int, value: T, compare: (T, T) -> Int
  * The maximum value is the root of the heap and it is in the
  * position 0 of the array.
  * Complexity:
- * @param heap array representado em array
- * @param heapSize numero de n�s do array
- * @return o valor retirado
+ * @param heap heap represented in array
+ * @param heapSize number of nodes in the heap
+ * @return value of the maximum element in the heap that was removed
  */
 fun <T> extractMaxHeap(heap: Array<T>, heapSize: Int, compare: (T, T) -> Int): T {
     TODO()
