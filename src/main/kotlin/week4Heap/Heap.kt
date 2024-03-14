@@ -26,41 +26,49 @@ fun right(i: Int): Int = (i shl 1) + 2
 /**
  * Make a maximum heap with root in the node i, according to a given comparator.
  * The left and right subtrees of i are maximum heaps.
- * C(1) =
+ * C(1) = O(1)
  * C(N) =
  * Complexity:
  * @param heap   - heap represented in array
  * @param heapSize - number of nodes in the heap
  * @param i - index of the root node of the heap
  */
-fun <T>  maxHeapify(heap: Array<T>, heapSize: Int, i: Int,
+tailrec fun <T>  maxHeapify(heap: Array<T>, heapSize: Int, i: Int,
                             compare: (T, T)-> Int) {
-  TODO()
+    val l = left( i )
+    val r = right( i )
+    var largest = if (l < heapSize && compare(heap[l], heap[ i]) > 0 ) l else i
+    if ( r < heapSize && compare(heap[r], heap[largest])> 0) largest = r
+    if( largest != i ) {
+        heap.exchange(largest, i)
+        maxHeapify(heap, heapSize, largest, compare)
+    }
 }
 
 /**
  * Make a minimum heap with root in the node i, according to a given comparator.
  * The left and right subtrees of i are minimum heaps.
- * Complexity:
+ * Complexity: O(lg n)
  * @param heap   - heap represented in array
  * @param heapSize - number of nodes in the heap
  * @param i - index of the root node of the heap
  */
 fun <T> minHeapify(heap: Array<T>, heapSize: Int, i: Int,
                    compare: (T, T)-> Int) {
-    TODO()
+    maxHeapify(heap, heapSize, i) { a, b-> compare(b, a) }
 }
 
 /**
  * Make a maximum heap in the first n nodes of the array.
  * first n nodes of the array
- * Complexity:
+ * Complexity: O(n) =
  * @param a array with the values to organize.
  * @param n number of nodes in the heap
  */
 fun <T> buildMaxHeap(a: Array<T>, n: Int=a.size,
                      compare:(T, T)->Int) {
-    TODO()
+    for( i in parent( n-1) downTo 0)
+        maxHeapify(a, n, i, compare)
 }
 
 /**
@@ -72,8 +80,8 @@ fun <T> buildMinHeap(a: Array<T>, n: Int=a.size, compare:(T, T)->Int) {
 
 /**
  * Sort an array using the heap sort algorithm.
- * C(1) =
- * C(n) =
+ * C(1) = O(1)
+ * C(n) = O(n) + n x O(lg n) = O(n x (lg n+1)) = O(n lg n)
  * Complexity:
  *  best case - O(n)
  *  worst case - O(n lg n)
@@ -81,19 +89,33 @@ fun <T> buildMinHeap(a: Array<T>, n: Int=a.size, compare:(T, T)->Int) {
  * @param a array to be sorted
  */
 fun <T> heapSort(a: Array<T>, compare:(T, T)->Int) {
-    TODO()
+    buildMaxHeap(a,a.size,compare)
+    for( i in a.size-1 downTo 1) {
+        a.exchange(0, i)
+        maxHeapify(a, i, 0, compare)
+    }
 }
 
 /**
  * Replace the value of a node i in a heap represented in array, by a new value.
  * The new value is greater than the old value, according to a given comparator.
+ * C(1) = O(1)
+ * C(n) = O(1) + C(n/2) = O(lg n)
  * Complexity:
+ *  best case - O(1)
+ *  worst case - O(lg n)
+ *  in terms of extra space - O(lgn)
  * @param heap heap represented in array
  * @param i index of the node whose value will be changed to a greater one
  * @param value new value
  */
-fun <T> heapIncreaseKey(heap: Array<T>, i: Int, value: T, compare: (T, T) -> Int) {
-    TODO()
+tailrec fun <T> heapIncreaseKey(heap: Array<T>, i: Int, value: T, compare: (T, T) -> Int) {
+    heap[i ] = value
+    val p = parent( i )
+    if ( p >= 0  && compare( heap[i], heap[p])> 0) {
+        heap.exchange(i, p)
+        heapIncreaseKey(heap, p, value, compare)
+    }
 }
 
 /**
