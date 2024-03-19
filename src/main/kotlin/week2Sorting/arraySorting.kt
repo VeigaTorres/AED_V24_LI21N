@@ -29,7 +29,7 @@ fun insertionSort(a:Array<Int>, left:Int=0, right: Int=a.size-1) {
      */
     for( j in left+1 .. right) {
        // Modify: Use left shift instead of exchange
-       val key = a[j]
+       //val key = a[j]
        for ( i in j downTo left+1) {
            if ( a[i] < a[i-1])
               a.exchange(i, i -1)
@@ -210,7 +210,6 @@ fun merge(a: Array<Int>, left: Int, m: Int, right: Int) {
 fun mergeSortButtonUp(a: Array<Int>,l: Int,r: Int){
     var m = 1
     while (m <= r-l) {
-        var i = l
         for (i in l .. r - m step 2*m) {
             merge(a, i, i + m - 1, min(r, i + 2 * m - 1))
         }
