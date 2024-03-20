@@ -11,6 +11,7 @@ package week4Heap
  *      Empty (isEmpty): Verify if the priority queue is empty.
  * The implementation of a priority queue using a maxheap.
  */
+@Suppress("UNCHECKED_CAST")
 class PriorityQueueInt (val capacity:Int, val comparator:(Int, Int)-> Int)  {
     private val heap:Array<Int> = arrayOfNulls<Any>(capacity) as Array<Int>
     private var heapSize= 0
