@@ -14,18 +14,23 @@ package week4Heap
 class PriorityQueueInt (val capacity:Int, val comparator:(Int, Int)-> Int)  {
     private val heap:Array<Int> = arrayOfNulls<Any>(capacity) as Array<Int>
     private var heapSize= 0
-    fun size():Int  = TODO()
-    fun isEmpty(): Boolean = TODO()
+    fun size():Int  = heapSize
+    fun isEmpty(): Boolean = size() == 0
     fun peek(): Int { // Complexity:
         check( !isEmpty() ){"illegal operation (peek): empty queue"}
-        TODO()
+        return heap[0]
     }
     fun poll( ): Int { // Complexity:
         check( !isEmpty() ){"illegal operation (poll): empty heap"}
-        TODO()
+        val max = extractMaxHeap(heap, heapSize,comparator)
+        --heapSize
+        return max
     }
     fun offer( v: Int):Boolean { // Complexity:
         if ( heapSize == capacity ) return false
-        TODO()
+        heap[heapSize] = v
+        heapIncreaseKey(heap, heapSize, v, comparator)
+        ++heapSize
+        return true
     }
 }
