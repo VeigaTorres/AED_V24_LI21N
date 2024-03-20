@@ -1,6 +1,9 @@
 package week2Sorting
 
 import week4Heap.heapSort
+import week5QuickSort.quickSort
+import week5QuickSort.quickSort0
+import week5QuickSort.quickSortWithMedian
 import kotlin.random.Random
 import kotlin.test.*
 
@@ -17,7 +20,7 @@ import kotlin.test.*
         //mergeSort(a,l,r)
         //mergeSortButtonUp(a, l, r)
         heapSort(a, Int::compareTo)
-        //quickSortHybrid(a,0, a.size-1, Int::compareTo)
+        //quickSort(a,0, a.size-1, Int::compareTo)
         //countingSort(a)
         //radixSort( a )
     fun testSorted( a: Array<Int> ) {
