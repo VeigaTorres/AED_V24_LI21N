@@ -1,9 +1,7 @@
 package week5QuickSort
 
-import week1Examples.algorithmEvaluation
 import kotlin.random.Random
-
-
+import week1Examples.algorithmEvaluation
 data class Algorithm(val description: String, val algorithm: (Array<Int>, Int, Int, (Int, Int)->Int)-> Unit)
 internal val sorts = arrayOf<Algorithm>(
    Algorithm("initial", ::quickSort0)

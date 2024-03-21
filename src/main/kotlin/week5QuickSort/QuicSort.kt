@@ -1,7 +1,5 @@
 package week5QuickSort
-
 import week2Sorting.*
-import week4Heap.buildMaxHeap
 
 fun <T> partition( a: Array<T>, l: Int=0, r: Int=a.size-1, compare:(T,T)->Int ) =
     partitionLomuto(a, l, r, compare)
@@ -30,7 +28,7 @@ fun <T> quickSort0(a: Array<T>, l: Int=0, r: Int=a.size-1, compare:(T,T)->Int) {
 }
 
 /**
- * Using the LOMUTO algorithm for partitioning.Divide an array
+ * Using the LOMUTO algorithm for partitioning. Divide an array
  * into two parts based on a pivot element.
  * The index q is the position of the pivot element after
  * partitioning:
@@ -57,7 +55,17 @@ fun <T> partitionLomuto(a: Array<T>, l: Int, r: Int,
      *    a[i+1 .. j-1] > pivot
      *    a[j .. r-1] in analysis
      */
-    TODO()
+    var i =l-1
+    val pivot = a[r]
+    for ( j in l until r) {
+        if ( compare( a[j], pivot) < 0) {
+            ++i
+            a.exchange(i,j)
+        }
+    }
+    a.exchange(i+1, r)
+    return i+1
+
 }
 
 /**
@@ -68,7 +76,16 @@ fun <T> partitionLomuto(a: Array<T>, l: Int, r: Int,
  * Depth of the recursion:
  */
 fun <T>quickSort1(a: Array<T>, left: Int=0, right: Int=a.size-1, compare: (T, T) -> Int) {
-    TODO()
+    var r = right
+    var l = left
+    while (r > l) {
+        // Divide the array into two parts
+        val q = partition(a, l, r, compare)
+        // Sort recursively only the left sub-arrays
+        quickSort1(a, l, q - 1, compare)
+        // quickSort0(a, q + 1, r, compare)
+        l = q+1
+    }
 }
 
 /**
@@ -80,7 +97,21 @@ fun <T>quickSort1(a: Array<T>, left: Int=0, right: Int=a.size-1, compare: (T, T)
  */
 fun <T> quickSort(a: Array<T>, left: Int=0, right: Int=a.size-1,
                   compare: (T, T) -> Int) {
-    TODO()
+    var r = right
+    var l = left
+    while (r > l) {
+        // Divide the array into two parts
+        val q = partition(a, l, r, compare)
+        // Sort recursively only the smaller sub-arrays
+        if ( q-l > r- q ) {
+            quickSort(a, q+1, r, compare)
+            r = q-1
+        }
+        else {
+            quickSort(a, l, q - 1, compare)
+            l = q+1
+        }
+    }
 }
 
 
@@ -90,7 +121,10 @@ fun <T> quickSort(a: Array<T>, left: Int=0, right: Int=a.size-1,
  * and the midean in a[r-1]
  */
 private fun <T> median(a: Array<T>, l: Int, r: Int, compare: (T, T) -> Int) {
-    TODO()
+    a.exchange( r-1, (l+r) ushr 1)
+    if(compare(a[l], a[r-1] )> 0) a.exchange( l, r-1)
+    if(compare(a[l], a[r]) > 0) a.exchange(l, r)
+    if(compare(a[r-1], a[r]) >0) a.exchange(r, r-1)
 }
 
 /**
@@ -104,8 +138,23 @@ private fun <T> median(a: Array<T>, l: Int, r: Int, compare: (T, T) -> Int) {
  */
 fun <T> quickSortWithMedian(a: Array<T>, left: Int=0, right: Int=a.size-1,
                             compare: (T, T) -> Int) {
-    TODO()
-}
+    var r = right
+    var l = left
+    while (r > l) {
+        median(a, l, r, compare)
+        // Divide the array into two parts
+        if ( (r-l) <= 2) return
+        val q = partition(a, l+1, r-1, compare)
+        // Sort recursively the smaller sub-arrays
+        if ( q-l > r- q ) {
+            quickSort(a, q+1, r, compare)
+            r = q-1
+        }
+        else {
+            quickSort(a, l, q - 1, compare)
+            l = q+1
+        }
+    }}
 
 /**
  * Using the Hoare algorithm for partition.Divide an array
