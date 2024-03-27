@@ -129,9 +129,9 @@ private fun <T> median(a: Array<T>, l: Int, r: Int, compare: (T, T) -> Int) {
 
 /**
  * QuickSort that uses the median of three to choose the pivot
- * Compare the three values: a[l], a[r], a[(r+l)/2]
- * The largest value was placed in a[r], the smallest in a[l]
- * and the midean in a[r-1]
+ * Compare the three values: a[left], a[right], a[(right+left)/2]
+ * The largest value was placed in a[right], the smallest in a[left]
+ * and the midean in a[right-1]
  * @param a array to sort
  * @param left index from which the sort is made (inclusive)
  * @param right index until which the sort is made (inclusive)
@@ -269,7 +269,6 @@ fun <T> quickSortThreePartition(a: Array<T>, left: Int=0, right: Int=a.size-1,
                                 compare: (T, T)-> Int) {
     var l = left
     var r = right
-    var q: Pair<Int, Int>
     while (l < r) {
         // Get the median of three
         median(a, l, r, compare)
