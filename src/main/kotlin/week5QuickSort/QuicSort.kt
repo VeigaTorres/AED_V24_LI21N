@@ -2,7 +2,7 @@ package week5QuickSort
 import week2Sorting.*
 
 fun <T> partition( a: Array<T>, l: Int=0, r: Int=a.size-1, compare:(T,T)->Int ) =
-    partitionLomuto(a, l, r, compare)
+    partitionHoare(a, l, r, compare)
 /**
  * -- First version of quick sort.
  * Divide an array into two parts based on a pivot element.
@@ -83,7 +83,7 @@ fun <T>quickSort1(a: Array<T>, left: Int=0, right: Int=a.size-1, compare: (T, T)
         val q = partition(a, l, r, compare)
         // Sort recursively only the left sub-arrays
         quickSort1(a, l, q - 1, compare)
-        // quickSort0(a, q + 1, r, compare)
+        // quickSort1(a, q + 1, r, compare)
         l = q+1
     }
 }
@@ -141,17 +141,18 @@ fun <T> quickSortWithMedian(a: Array<T>, left: Int=0, right: Int=a.size-1,
     var r = right
     var l = left
     while (r > l) {
+        // Choose the pivot using the median of three
         median(a, l, r, compare)
         // Divide the array into two parts
         if ( (r-l) <= 2) return
         val q = partition(a, l+1, r-1, compare)
         // Sort recursively the smaller sub-arrays
         if ( q-l > r- q ) {
-            quickSort(a, q+1, r, compare)
+            quickSortWithMedian(a, q+1, r, compare)
             r = q-1
         }
         else {
-            quickSort(a, l, q - 1, compare)
+            quickSortWithMedian(a, l, q - 1, compare)
             l = q+1
         }
     }}
@@ -177,7 +178,16 @@ fun <T> partitionHoare(a: Array<T>, l: Int=0, r: Int=a.size-1, compare: (T, T)->
      *    a[j+1 .. r-1] >= pivot
      *    a[i .. j]     in analysis
      */
-    TODO()
+    val pivot = a[r]
+    var i = l
+    var j = r - 1
+    while (i <= j) {
+        while (compare(a[i], pivot) < 0) ++i
+        while (j >= i && compare(a[j], pivot) > 0) --j
+        if (i <= j) a.exchange( i++, j--)
+    }
+    a.exchange(i, r)// Coloca o pivot entre os menores  e os maiores ou iguais
+    return i
 }
 
 /**
@@ -211,7 +221,7 @@ fun <T> threePartition(a: Array<T>, left: Int=0, right: Int=a.size-1, compare: (
     /* Invariant of the cycle
      * 	a[l .. p]       == pivot
      * 	a[p+1 .. i]     <  pivot
-     *   a[j-1 .. q]     > pivot
+     *  a[j-1 .. q]     > pivot
      *	a[q .. r]       == pivot
      */
     while (true) {
@@ -250,14 +260,32 @@ fun <T> threePartition(a: Array<T>, left: Int=0, right: Int=a.size-1, compare: (
 
 /**
  * Algorithm quick sort using the midean of three and three partitions
-// +----------------------------------------------------------+
-// |   pivot <         |        equal pivot      |  >= pivot  |
-// +----------------------------------------------------------+
-//                      ^q0                     ^q1             ^r
+ * +----------------------------------------------------------+
+ * |   pivot <         |        equal pivot      |  >= pivot  |
+ * +----------------------------------------------------------+
+ *                     ^q0                     ^q1             ^r
  */
 fun <T> quickSortThreePartition(a: Array<T>, left: Int=0, right: Int=a.size-1,
                                 compare: (T, T)-> Int) {
-    TODO()
+    var l = left
+    var r = right
+    var q: Pair<Int, Int>
+    while (l < r) {
+        // Get the median of three
+        median(a, l, r, compare)
+        if (r - l <= 2) return
+        // Divide the array into three parts
+        val (q0, q1) = threePartition(a, l + 1, r - 1, compare)
+        // Sort recursively the left or right sub-array depending
+        // on the smallest size
+        if (q0 - l < r - q1) {
+            quickSortThreePartition(a, l, q0, compare)
+            l = q1
+        } else {
+            quickSortThreePartition(a, q1, r, compare)
+            r = q0
+        }
+    }
 }
 
 /**
@@ -282,8 +310,7 @@ fun <T> quickSortHybrid(a: Array<T>, left: Int=0, right: Int=a.size-1, compare: 
         median(a, l, r, compare)
         // Divide the array into three parts
         val (q0, q1) = threePartition(a, l + 1, r - 1, compare)
-        // Sort recursively the left or right sub-array depending
-        // on the smallest size
+        // Sort recursively the left or right sub-array depending on the smallest size
         if (q0 - l < r - q1) {
             quickSortHybrid(a, l, q0, compare)
             l = q1
