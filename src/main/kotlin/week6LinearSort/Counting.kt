@@ -99,7 +99,7 @@ fun radixSort(v: Array<Int>) {
         b = aux
     }
     //Atualize a
-    if ( b != v ) b.copyInto( v )
+    if ( b !== v ) b.copyInto( v )
 }
 
 
