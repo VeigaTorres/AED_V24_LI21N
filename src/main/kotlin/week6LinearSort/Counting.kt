@@ -1,8 +1,6 @@
 package week6LinearSort
 
 import kotlin.math.ceil
-import kotlin.math.log
-import kotlin.math.pow
 
 /**
  * Sort an array using the counting sort algorithm. The algorithm is stable.
@@ -12,7 +10,19 @@ import kotlin.math.pow
  * @param k each element of the array a is an integer between 0..k
  */
 private fun countingSort(a: Array<Int>, b: Array<Int>, n:Int, k: Int) {
-    TODO()
+    val c = Array(k+1){0}
+    for( i in 0 ..< n )
+        c[ a[i] ]++
+
+    for(i in 1 ..< c.size)
+        c[i]+= c[i-1]
+
+    for( i in n-1 downTo 0 ) {
+        val v = a[i]
+        c[v]--
+        val index = c[ v ]
+        b[index] = v
+    }
 }
 /**
  * Sort an array using the counting sort algorithm. The algorithm is stable.
@@ -20,7 +30,13 @@ private fun countingSort(a: Array<Int>, b: Array<Int>, n:Int, k: Int) {
  * @param a array com os elementos a serem ordenados
  */
 fun countingSort( a: Array<Int> ) {
-    TODO()
+    if (a.size > 1) {
+        val k = a.max()
+        require(k <= a.size) { "maximum is greater than size" }
+        val b = Array(a.size) { 0 }
+        countingSort(a, b, a.size, k)
+        b.copyInto(a)
+    }
 }
 
 /**
@@ -40,13 +56,24 @@ private fun countingRadixSort( a: Array<Int>, b: Array<Int>,
     val shift = digitNumber * rBits
     val c = Array(mask + 1) {0}
     // Count occurrences of each digit at the specified digit position
+    for( v in a ) {
+        val v1 = v shr shift
+        val v2 = v1 and mask
+        c[v2]++
 
+    }
     // Adjust the counts to indicate the position of each digit in the output array
     for( i in 1 until c.size)
         c[i] += c[i-1]
 
     // Place the elements in the output array
-
+    for(i in a.size-1 downTo 0 ) {
+        val v1 = a[i] shr shift
+        val v2 = v1 and mask
+        c[v2]--
+        val index = c[v2]
+        b[index] = a[i]
+    }
 }
 
 /**
@@ -63,8 +90,16 @@ fun radixSort(v: Array<Int>) {
     var a = v
     var b = Array(v.size) { 0 }
     // Iterate through each digit position
-    //  1. Sort based on the current digit position using Counting Radix Sort
-    //  2. Swap the arrays
+    for( d in 0 ..< d_digits) {
+        // Sort based on the current digit position using Counting Radix Sort
+        countingRadixSort(a, b, d, r_bits)
+        // Swap the arrays
+        val aux = a
+        a = b
+        b = aux
+    }
+    //Atualize a
+    if ( b != v ) b.copyInto( v )
 }
 
 
