@@ -2,14 +2,12 @@ package week7ADT.stack
 
 import kotlin.test.*
 
-
 class TestStack {
     val N = 10
 
     fun getStack(n: Int): Stack<Int> {
         //return LinkedStack<Int>(  )
-        //return ArrayStack<Int>(n)
-        TODO()
+        return ArrayStack<Int>(n)
     }
     @Test
     fun testEmpty() {
