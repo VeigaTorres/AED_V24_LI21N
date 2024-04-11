@@ -2,6 +2,7 @@ package week7ADT.queue
 
 import week4Heap.extractMaxHeap
 import week4Heap.heapIncreaseKey
+import week4Heap.maxHeapify
 import kotlin.Comparator
 
 /*
@@ -16,7 +17,7 @@ import kotlin.Comparator
  * The implementation of a priority queue using a MINHEAP,
  * the parent is always SMALLER than its children.
  */
-class PriorityQueue<E> (val capacity: Int, val comparator: Comparator<E>) {
+class PriorityQueue<E> (val capacity: Int, val comparator: Comparator<E>) : Queue <E> {
     // In a minheap, the parent is always smaller than its children
     // the compare function is used to compare the elements in the maxheap
     // must be inverted to create a minheap.
@@ -24,5 +25,35 @@ class PriorityQueue<E> (val capacity: Int, val comparator: Comparator<E>) {
 
     private val heap: Array<E> = arrayOfNulls<Any>(capacity) as Array<E>
     private var sizeHeap: Int = 0
+    override val size: Int
+        get() = sizeHeap
+
+    override fun isEmpty(): Boolean = size == 0
+
+    override fun peek(): E {
+        if( isEmpty()) throw  NoSuchElementException("")
+        return heap[0]
+    }
+
+    override fun poll(): E {
+        check( !isEmpty() ){""}
+
+     /*   val e = heap[0]
+        heap[0] = heap[sizeHeap-1]
+        maxHeapify(heap, sizeHeap-1, 0, compare)
+        --sizeHeap
+        return e
+
+      */
+        return extractMaxHeap(heap, sizeHeap--, compare)
+    }
+
+    override fun offer(e: E): Boolean {
+        if (sizeHeap == heap.size) return false
+        //heap[sizeHeap] = e
+        heapIncreaseKey(heap, sizeHeap, e, compare)
+        ++ sizeHeap
+        return true
+    }
 
 }

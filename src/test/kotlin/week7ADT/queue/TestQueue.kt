@@ -5,9 +5,8 @@ import kotlin.test.*
 class TestQueue {
     val N = 10
     fun getQueue(n: Int): Queue<Int> {
-        //return LinkedQueue<Int>()
+        return LinkedQueue<Int>()
         //return ArrayQueue<Int>(n)
-        TODO()
     }
 
     @Test

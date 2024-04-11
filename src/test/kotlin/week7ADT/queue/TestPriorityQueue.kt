@@ -2,7 +2,7 @@ package week7ADT.queue
 
 import kotlin.test.*
 
-/*
+
 class TestPriorityQueue {
     val N = 10
     @Test
@@ -96,6 +96,7 @@ class TestPriorityQueue {
     @Test
     fun testIterator() {
         val q = PriorityQueue<Int>(9, Int::compareTo)
+        /*
         assertFalse(q.iterator().hasNext())
         for( i in 0 .. 2) q.offer(i)
         assertTrue(q.iterator().hasNext())
@@ -103,7 +104,7 @@ class TestPriorityQueue {
         for ( v in q )
             assertEquals(v, v2++)
         assertEquals(3, v2)
+     */
     }
 }
 
- */
