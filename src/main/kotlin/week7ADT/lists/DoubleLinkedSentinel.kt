@@ -57,7 +57,7 @@ class DoubleLinkedSentinel<E> : Iterable<E> {
 }
 
 fun main() {
-    val a =DoubleLinked<Int> ()
+    val a =DoubleLinkedSentinel<Int> ()
     for (  i in  0 ..< 5)
         a.add(i)
     for ( v in a)

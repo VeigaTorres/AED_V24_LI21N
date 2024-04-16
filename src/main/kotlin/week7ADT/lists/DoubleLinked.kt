@@ -75,7 +75,6 @@ fun main() {
     a.remove( 4 )          // remove the first
     a.remove(2)            // remove the second element
     a.remove(0)            // remove the last element
-    for ( v in a)
-        println( v )
+    for ( v in a)  println( v )
 
 }
