@@ -1,5 +1,7 @@
 package week7ADT.queue
 
+import week7ADT.stack.ArrayStack
+
 /**
  * ArrayQueue is a queue implementation using an array
  * @param E the type of the elements in the queue
@@ -42,16 +44,17 @@ class ArrayQueue<E>(val capacity: Int) : Queue<E>, Iterable<E> {
         return true
     }
 
-
-
     override fun iterator(): Iterator<E> {
-        class Iter<E> : Iterator<E> {
+        class Iter : Iterator<E> {
             var index=0
             override fun hasNext(): Boolean {
                 return index < count
             }
             override fun next(): E {
-                TODO("Not yet implemented")
+                if( !hasNext() ) throw  NoSuchElementException("")
+                val v = array[ (head+ index)%array.size ]
+                index ++
+                return v
             }
         }
         return Iter()
@@ -61,7 +64,15 @@ class ArrayQueue<E>(val capacity: Int) : Queue<E>, Iterable<E> {
 }
 
 fun main() {
-    val a= ArrayQueue<Int>(5)
-    for( v in a ) println(v)
-}
+    val a = ArrayQueue<Int> (4)
+    for (  i in  0 ..< a.capacity)
+        a.offer(i)     // fill the queue
+    for ( v in a)
+        println( v )
+    println("....")
+    a.poll()            // remove the first element
+    a.offer(a.capacity) // add a new element
+    for ( v in a)
+        println( v )
 
+}

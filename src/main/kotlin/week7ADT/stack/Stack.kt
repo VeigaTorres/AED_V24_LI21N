@@ -12,7 +12,7 @@ package week7ADT.stack
  * @property size the number of elements in the stack
  * @param E the type of the elements in the stack
  */
-interface Stack<E> {
+interface Stack<E> : Iterable<E> {
     val size: Int
     fun isEmpty(): Boolean
     fun push(e: E)

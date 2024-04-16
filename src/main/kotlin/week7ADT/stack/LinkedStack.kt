@@ -28,6 +28,23 @@ class LinkedStack<E>() : Stack<E> {
     override fun peek(): E {
         return checkNotNull( head ){"stack is empty"}.key
     }
+
+    override fun iterator(): Iterator<E> {
+         class Iter : Iterator<E> {
+            var curr: Node<E>? = head
+            override fun hasNext(): Boolean = curr != null
+
+            override fun next(): E {
+                return (curr?:throw NoSuchElementException()).let{
+                    curr= it.next
+                    it
+                }.key
+            }
+
+        }
+        return Iter()
+    }
+
     override fun pop(): E { // remove the first node
         val first = checkNotNull(head){"stack empty"}
         val second = first.next
@@ -42,4 +59,12 @@ class LinkedStack<E>() : Stack<E> {
         ++count
     }
 
+}
+
+fun main() {
+    val a = LinkedStack<Int> ()
+    for (  i in  0 .. 3)
+        a.push(i)
+    for ( v in a)
+        println( v )
 }

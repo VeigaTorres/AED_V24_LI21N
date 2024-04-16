@@ -1,5 +1,7 @@
 package week7ADT.lists
 
+import week7ADT.queue.LinkedQueue
+
 class DoubleLinked<E> : Iterable<E> {
     private class Node<E> ( val key: E ) {
         var next: Node<E>? = null
@@ -8,26 +10,34 @@ class DoubleLinked<E> : Iterable<E> {
 
     private var head: Node<E>? = null
 
-    private fun listInsert( x: Node<E>) {
+    private fun listInsert( x: Node<E> ) {
         x.next = head
         x.prev = null
-        head?.prev = x
+        val first = head
+        if ( first != null ) {
+            first.prev = x
+        }
         head = x
     }
 
     private fun listDelete( x: Node<E> ) {
-        if ( x.prev == null ) head = x.next
-        else x.prev?.next = x.next
-        x.next?.prev = x.prev
+        val seg = x.next
+        if ( seg != null)
+            seg.prev = x.prev
+        val ant = x.prev
+        if ( ant != null )
+            ant.next = x.next
+        else
+            head = x.next
     }
 
     private fun listSearch( k: E ) : Node<E>? {
         var curr = head
         while ( curr != null ) {
-            if ( curr.key == k ) return curr
-            curr = curr.next
+            if (curr.key == k) return curr
+            curr= curr.next
         }
-        return null // TODO: implement i
+        return null
     }
 
     fun add( k: E) {
@@ -53,4 +63,19 @@ class DoubleLinked<E> : Iterable<E> {
             }
         }
     }
+}
+
+fun main() {
+    val a =DoubleLinked<Int> ()
+    for (  i in  0 ..< 5)
+        a.add(i)
+    for ( v in a)
+        println( v )
+    println("....")
+    a.remove( 4 )          // remove the first
+    a.remove(2)            // remove the second element
+    a.remove(0)            // remove the last element
+    for ( v in a)
+        println( v )
+
 }

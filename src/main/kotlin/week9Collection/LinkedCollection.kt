@@ -1,5 +1,11 @@
 package week9Collection
 
+/**
+ * Dinamic data structure that represents a collection of elements
+ * stored in a doubly linked list with sentinel node.
+ * This class is a simplified version of the LinkedList class in Java.
+ * @param E the type of the elements in the collection
+ */
 class LinkedCollection<E> : MutableCollection<E> {
     private class Node<E> (val value: E = Any() as E){
         var prev: Node<E> = this
