@@ -1,10 +1,18 @@
 package week9Collection
 
+/**
+ * Dinamic data structure that represents a collection of elements
+ * stored in an array. The dimensions of the array are increased
+ * automatically when the array is full. The array is increased
+ * by a factor of 2.
+ * This class is a simplified version of the ArrayList class.
+ * @param E the type of the elements in the collection
+ * @param capacityInicial Initial capacity of the collection.
+ */
 class ArrayCollection<E>( capacityInicial: Int = 10 ) {//:  RandomAccess, MutableCollection<E>{
-    //<< Variáveis de instância >>
-    private var count = 0       // Número de elementos contidos.
-    private var array: Array<E> = allocate( capacityInicial )// Bloco de memória alojado.
-    val capacity: Int get() = array.size
+    //<< Instance variables >>
+    private var count = 0       // Number of elements contained.
+    private var array: Array<E> = allocate( capacityInicial )// allocates memory to elements
 
     operator fun get(index: Int): E {
         require( index < count)

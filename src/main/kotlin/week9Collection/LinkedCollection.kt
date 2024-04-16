@@ -6,9 +6,9 @@ class LinkedCollection<E> : MutableCollection<E> {
         var next: Node<E> = this
     }
 
-    //<< Variáveis de instância >>
-    private var count: Int = 0    // Número de elementos contidos.
-    private val head: Node<E> = Node() // Nó sentinela.
+    //<< Instance variables >>
+    private var count: Int = 0    // Number of elements contained.
+    private val head: Node<E> = Node() // sentinel node
 
     override val size get() = count
     override fun isEmpty(): Boolean = count == 0
@@ -17,7 +17,7 @@ class LinkedCollection<E> : MutableCollection<E> {
     }
 
     /**
-     * Adição
+     * Add functions
      */
     private fun makeNode(suc: Node<E>, e:E): Node<E> {
         val n = Node<E>(e)
@@ -47,7 +47,7 @@ class LinkedCollection<E> : MutableCollection<E> {
     }
 
     /**
-     * Remoção
+     * Remove functions
      */
     private fun unlinkNode(n: Node<E>) {
         n.prev.next = n.next
@@ -66,7 +66,7 @@ class LinkedCollection<E> : MutableCollection<E> {
         TODO()
     }
     fun removeLast(): E {
-        check(isNotEmpty());
+        check(isNotEmpty())
         TODO()
     }
     fun removeIf( pred: (e: E)-> Boolean): Boolean { TODO() }
@@ -76,7 +76,7 @@ class LinkedCollection<E> : MutableCollection<E> {
             = removeIf { !elements.contains(it) }
 
     /**
-     * Pesquisa
+     * Search functions
      */
     private fun getNode(e: E): Node<E>? {
         var n = head.next
@@ -91,6 +91,9 @@ class LinkedCollection<E> : MutableCollection<E> {
     override fun containsAll(elements: Collection<E>): Boolean
          = elements.all{ contains( it) }
 
+    /**
+     * Iterator
+     */
     override fun iterator(): MutableIterator<E> =
         object: MutableIterator<E> {
             var last = head
@@ -103,6 +106,9 @@ class LinkedCollection<E> : MutableCollection<E> {
             override fun remove() { TODO() }
         }
 
+    /**
+     * Merge lists
+     */
     private fun move(p: Node<E>, first:Node<E>, last:Node<E>) {
         last.prev.next = p
         first.prev.next = last
@@ -112,9 +118,8 @@ class LinkedCollection<E> : MutableCollection<E> {
         last.prev = first.prev
         first.prev = prev
     }
-
     fun merge( lst: LinkedCollection<E>,
-               cmp: Comparator<E>) {
+               cmp: Comparator<E> ) {
         require( lst !== this ){"the lists cannot be the same"}
         var first1 = head.next; val last1 = head
         var first2 = lst.head.next; val last2= lst.head
