@@ -42,19 +42,19 @@ class ArrayQueue<E>(val capacity: Int) : Queue<E>, Iterable<E> {
         return true
     }
 
-    class Iter<E> : Iterator<E> {
-        override fun hasNext(): Boolean {
-            TODO("Not yet implemented")
-        }
 
-        override fun next(): E {
-            TODO("Not yet implemented")
-        }
-
-    }
 
     override fun iterator(): Iterator<E> {
-        TODO("Not yet implemented")
+        class Iter<E> : Iterator<E> {
+            var index=0
+            override fun hasNext(): Boolean {
+                return index < count
+            }
+            override fun next(): E {
+                TODO("Not yet implemented")
+            }
+        }
+        return Iter()
     }
 
 
