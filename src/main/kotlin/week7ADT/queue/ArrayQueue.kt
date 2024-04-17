@@ -12,18 +12,17 @@ import week7ADT.stack.ArrayStack
  * @property tail the index of the next available position in the queue
  * @constructor creates an empty queue with the given capacity
  */
-class ArrayQueue<E>(val capacity: Int) : Queue<E>, Iterable<E> {
+class ArrayQueue<E>(val capacity: Int) : Queue<E> {
     private val array = arrayOfNulls<Any>(capacity) as Array<E>
     private var head: Int = 0
     private var tail: Int = 0
     private var count = 0
-    override val size: Int
-        get() = count
+    override val size: Int get() = count
 
     override fun isEmpty(): Boolean = count == 0
 
     override fun peek(): E {
-        if (isEmpty()) throw NoSuchElementException("not exist element")
+        if (isEmpty()) throw NoSuchElementException("not exist elements")
         return array[head]
     }
 
@@ -51,7 +50,7 @@ class ArrayQueue<E>(val capacity: Int) : Queue<E>, Iterable<E> {
                 return index < count
             }
             override fun next(): E {
-                if( !hasNext() ) throw  NoSuchElementException("")
+                if ( !hasNext() ) throw NoSuchElementException("No more elements")
                 val v = array[ (head+ index)%array.size ]
                 index ++
                 return v
@@ -59,8 +58,6 @@ class ArrayQueue<E>(val capacity: Int) : Queue<E>, Iterable<E> {
         }
         return Iter()
     }
-
-
 }
 
 fun main() {

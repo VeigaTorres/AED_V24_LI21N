@@ -12,7 +12,7 @@ package week7ADT.queue
  * @property size the number of elements in the queue
  * @param E the type of the elements in the queue
  */
-interface Queue<E>  {
+interface Queue<E>: Iterable<E>  {
     val size: Int
     fun isEmpty(): Boolean
     fun peek(): E

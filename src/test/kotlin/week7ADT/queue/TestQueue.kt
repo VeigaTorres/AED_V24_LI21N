@@ -5,8 +5,8 @@ import kotlin.test.*
 class TestQueue {
     val N = 10
     fun getQueue(n: Int): Queue<Int> {
-        return LinkedQueue<Int>()
-        //return ArrayQueue<Int>(n)
+        //return LinkedQueue<Int>()
+        return ArrayQueue<Int>(n)
     }
 
     @Test
@@ -67,14 +67,14 @@ class TestQueue {
 
     @Test
     fun testIterator() {
-        /*val q = getQueue(3)
+        val q = getQueue(3)
         assertFalse(q.iterator().hasNext())
         for( i in 0 .. 2) q.offer(i)
         assertTrue(q.iterator().hasNext())
         var v2 = 0
         for ( v in q )
-            assertEquals(v, v2++)
-        assertEquals(3, v2)*/
+            assertEquals(v2++, v)
+        assertEquals(3, v2)
     }
 
 }

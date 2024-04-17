@@ -63,4 +63,17 @@ class TestStack {
         assertTrue(q.isEmpty())
         assertEquals( 0, q.size)
     }
+
+    @Test
+    fun testIterator() {
+        val q = getStack(3)
+        assertFalse(q.iterator().hasNext())
+        for( i in 0 .. 2) q.push(i)
+        assertTrue(q.iterator().hasNext())
+        var v2 = 2
+        for ( v in q )
+            assertEquals(v, v2--)
+        assertEquals(-1, v2)
+    }
 }
+

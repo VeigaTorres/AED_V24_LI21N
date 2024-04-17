@@ -9,7 +9,7 @@ package week7ADT.queue
  * @property count the number of elements in the queue
  * @constructor creates an empty queue
  */
-class LinkedQueue<E> :Queue<E>, Iterable<E> {
+class LinkedQueue<E> :Queue<E> {
     private class Node<T> (val key: T, var next: Node<T>? = null)
 
     private var head: Node<E>? = null
@@ -55,7 +55,7 @@ class LinkedQueue<E> :Queue<E>, Iterable<E> {
             }
 
             override fun next(): E =
-                (curr?: throw NoSuchElementException() ).also {
+                (curr?: throw NoSuchElementException("no more elements") ).also {
                     curr= it.next
                 }.key
         }
@@ -66,12 +66,12 @@ class LinkedQueue<E> :Queue<E>, Iterable<E> {
 fun main() {
     val a = LinkedQueue<Int> ()
     for (  i in  0 ..< 4)
-        a.offer(i)     // fill the queue
+        a.offer(i)
     for ( v in a)
         println( v )
     println("....")
     a.poll()            // remove the first element
-    a.offer(4) // add a new element
+    a.offer(4)        // add a new element
     for ( v in a)
         println( v )
 

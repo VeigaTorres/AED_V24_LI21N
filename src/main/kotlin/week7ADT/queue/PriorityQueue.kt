@@ -2,7 +2,6 @@ package week7ADT.queue
 
 import week4Heap.extractMaxHeap
 import week4Heap.heapIncreaseKey
-import week4Heap.maxHeapify
 import kotlin.Comparator
 
 /*
@@ -35,6 +34,14 @@ class PriorityQueue<E> (val capacity: Int, val comparator: Comparator<E>) : Queu
         return heap[0]
     }
 
+    override fun offer(e: E): Boolean {
+        if (sizeHeap == heap.size) return false
+        //heap[sizeHeap] = e
+        heapIncreaseKey(heap, sizeHeap, e, compare)
+        ++ sizeHeap
+        return true
+    }
+
     override fun poll(): E {
         check( !isEmpty() ){""}
 
@@ -48,12 +55,14 @@ class PriorityQueue<E> (val capacity: Int, val comparator: Comparator<E>) : Queu
         return extractMaxHeap(heap, sizeHeap--, compare)
     }
 
-    override fun offer(e: E): Boolean {
-        if (sizeHeap == heap.size) return false
-        //heap[sizeHeap] = e
-        heapIncreaseKey(heap, sizeHeap, e, compare)
-        ++ sizeHeap
-        return true
-    }
+    override fun iterator(): Iterator<E> =
+        object : Iterator<E> {
+            var index = 0
+            override fun hasNext(): Boolean = index < sizeHeap
+            override fun next(): E {
+                if( !hasNext() ) throw NoSuchElementException("no more elements")
+                return heap[index++]
+            }
 
+        }
 }

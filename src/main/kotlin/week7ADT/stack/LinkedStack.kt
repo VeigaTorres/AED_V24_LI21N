@@ -35,7 +35,7 @@ class LinkedStack<E>() : Stack<E> {
             override fun hasNext(): Boolean = curr != null
 
             override fun next(): E {
-                return (curr?:throw NoSuchElementException()).let{
+                return (curr?:throw NoSuchElementException("no more elements")).let{
                     curr= it.next
                     it
                 }.key

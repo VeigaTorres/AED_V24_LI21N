@@ -10,7 +10,8 @@ package week7ADT.stack
  */
 class ArrayStack<E>(val capacity: Int) : Stack<E> {
     private val array: Array<E> = arrayOfNulls<Any>(capacity) as Array<E>
-    private var top: Int = 0 // index of next push
+    private var top: Int = 0     // index of next push
+
     override val size: Int get() = top
     override fun isEmpty(): Boolean = top == 0
 
@@ -33,10 +34,7 @@ class ArrayStack<E>(val capacity: Int) : Stack<E> {
 
     private inner class IterArray : Iterator<E> {
         var index = size
-        override fun hasNext(): Boolean =
-             index > 0
-
-
+        override fun hasNext(): Boolean = index > 0
         override fun next(): E {
             if ( !hasNext() ) throw NoSuchElementException("No more elements")
             --index
