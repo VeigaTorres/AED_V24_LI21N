@@ -1,5 +1,7 @@
 package week9Collection
 
+import kotlin.math.max
+
 /**
  * Dinamic data structure that represents a collection of elements
  * stored in an array. The dimensions of the array are increased
@@ -14,18 +16,20 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) {//:  RandomAccess, Mutabl
     private var count = 0       // Number of elements contained.
     private var array: Array<E> = allocate( capacityInicial )// allocates memory to elements
 
+    val capacity: Int get() = array.size
+    val size: Int get() = count
+
     operator fun get(index: Int): E {
         require( index < count)
         TODO()
     }
-
     operator fun set(index: Int, element: E): E {
         require( index < count)
         TODO()
     }
 
     private fun allocate( n: Int ): Array<E> =
-        arrayOfNulls<Any>(n) as Array<E>
+        arrayOfNulls<Any>( max(n, 1) ) as Array<E>
 
     fun add( i: Int, e: E) {
         require( i <= count )
@@ -34,7 +38,7 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) {//:  RandomAccess, Mutabl
     }
 
     fun removeAt( index: Int ) {
-        require(index < count)
+        require(index in 0 ..< count )
         TODO()
         --count
     }
@@ -46,7 +50,10 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) {//:  RandomAccess, Mutabl
     }
 
     fun removeIf( pred: ( E)-> Boolean ): Boolean {
-       TODO()
+       var last= 0
+       for( i in 0 ..< size)
+           if( !pred(array[i]) ) array[last++]= array[i]
+       count = last
        return false
     }
 

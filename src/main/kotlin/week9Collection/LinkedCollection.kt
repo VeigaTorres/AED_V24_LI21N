@@ -48,7 +48,7 @@ class LinkedCollection<E> : MutableCollection<E> {
         return true
     }
     override fun addAll(elements: Collection<E>): Boolean {
-       elements.forEach { add(it) }
+       TODO()
        return !elements.isEmpty()
     }
 
@@ -65,7 +65,7 @@ class LinkedCollection<E> : MutableCollection<E> {
         return n
     }
     override fun remove(element: E): Boolean {
-        return getNode(element)?.also { removeNode(it) } != null
+        TODO()
     }
     fun removeFirst(): E {
         check(!isEmpty())
@@ -94,8 +94,7 @@ class LinkedCollection<E> : MutableCollection<E> {
     }
     override fun contains(element: E)
         = getNode(element) != null
-    override fun containsAll(elements: Collection<E>): Boolean
-         = elements.all{ contains( it) }
+    override fun containsAll(elements: Collection<E>): Boolean = TODO()
 
     /**
      * Iterator
