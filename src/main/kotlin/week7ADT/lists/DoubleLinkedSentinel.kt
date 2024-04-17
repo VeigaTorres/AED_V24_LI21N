@@ -17,8 +17,7 @@ class DoubleLinkedSentinel<E> : Iterable<E> {
     }
 
     private fun listDelete( x: Node<E>) {
-       x.prev.next = x.next
-       // val ant = x.prev; ant.next = x.nex
+       x.prev.next = x.next // val ant = x.prev; ant.next = x.next
        x.next.prev = x.prev
     }
 
@@ -34,10 +33,12 @@ class DoubleLinkedSentinel<E> : Iterable<E> {
     fun add( k: E) {
        listInsert( Node(k) )
     }
+
     fun remove( k: E ) {
         val n = listSearch( k )
         if ( n != sentinel) listDelete( n)
     }
+
     fun contains( k: E ) : Boolean{
         return listSearch( k ) != sentinel
     }
