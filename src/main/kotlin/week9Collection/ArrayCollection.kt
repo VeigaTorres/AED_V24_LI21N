@@ -16,39 +16,17 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) : MutableCollection<E>{
     private var count = 0       // Number of elements contained.
     private var array: Array<E> = allocate( capacityInicial )// allocates memory to elements
 
+    private fun allocate( n: Int ): Array<E> =
+        arrayOfNulls<Any>( max(n, 1) ) as Array<E>
     val capacity: Int get() = array.size
     override val size: Int get() = count
-    override fun clear() {
-        count =0
-    }
-
-    override fun isEmpty(): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun containsAll(elements: Collection<E>): Boolean {
-        elements.all { indexOf(it) != -1 }
-        return !elements.isEmpty()
-    }
-
-    override fun addAll(elements: Collection<E>): Boolean {
-        elements.forEach {add( it )}
-        return !elements.isEmpty()
-    }
-
-    override fun add(element: E): Boolean {
-        add(count, element)
-        return true
-    }
-
-    override fun contains(element: E): Boolean {
-       return indexOf( element ) !=-1
-    }
+    override fun isEmpty(): Boolean = count== 0
 
     operator fun get(index: Int): E {
         require( index < count)
         return array[index]
     }
+
     operator fun set(index: Int, element: E): E {
         require( index < count)
         val old= array[index]
@@ -56,8 +34,9 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) : MutableCollection<E>{
         return old
     }
 
-    private fun allocate( n: Int ): Array<E> =
-        arrayOfNulls<Any>( max(n, 1) ) as Array<E>
+    override fun clear() {
+        count =0
+    }
 
     fun add( i: Int, e: E) {
         require( i <= count )
@@ -74,10 +53,14 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) : MutableCollection<E>{
         ++count
     }
 
-    fun removeAt( index: Int ) {
-        require(index in 0 ..< count )
-        array.copyInto(array, index, index+1, size)
-        --count
+    override fun add(element: E): Boolean {
+        add(count, element)
+        return true
+    }
+
+    override fun addAll(elements: Collection<E>): Boolean {
+        elements.forEach {add( it )}
+        return !elements.isEmpty()
     }
 
     fun indexOf( e: E ): Int {
@@ -86,14 +69,40 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) : MutableCollection<E>{
         return -1
     }
 
+    override fun contains(element: E): Boolean =
+        indexOf( element ) !=-1
+
+    override fun containsAll(elements: Collection<E>): Boolean =
+        elements.all { indexOf(it) != -1 }
+
+    fun removeAt( index: Int ) {
+        require(index in 0 ..< count )
+        array.copyInto(array, index, index+1, size)
+        --count
+    }
+
     fun removeIf( pred: ( E)-> Boolean ): Boolean {
        var flag = false
-        var last= 0
+       var last= 0
        for( i in 0 ..< size)
             if ( ! pred( array[i] ) ) array[last++]= array[i]
             else flag = true
+       count = last // Na aula faltava atualizar o count
        return flag
     }
+
+    override fun remove(element: E): Boolean {
+        val ind = indexOf( element)
+        if ( ind == -1 ) return false
+        removeAt(ind)
+        return true
+    }
+
+    override fun retainAll(elements: Collection<E>): Boolean =
+        removeIf { !elements.contains(it) }
+
+    override fun removeAll(elements: Collection<E>): Boolean =
+        removeIf { elements.contains( it ) }
 
     override operator fun iterator(): MutableIterator<E> =
         object : MutableIterator<E> {
@@ -110,18 +119,4 @@ class ArrayCollection<E>( capacityInicial: Int = 10 ) : MutableCollection<E>{
             }
         }
 
-    override fun retainAll(elements: Collection<E>): Boolean {
-       return removeIf { !elements.contains(it) }
-    }
-
-    override fun removeAll(elements: Collection<E>): Boolean {
-        return removeIf { elements.contains( it ) }
-    }
-
-    override fun remove(element: E): Boolean {
-        val ind = indexOf( element)
-        if ( ind == -1 ) return false
-        removeAt(ind)
-        return true
-    }
 }
