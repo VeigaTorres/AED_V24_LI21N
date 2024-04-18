@@ -3,8 +3,7 @@ package week9Collection
 import kotlin.test.*
 
 class TestCollection {
-    private fun emptyCollection():MutableCollection<Int> = TODO()
-    //private fun emptyCollection():MutableCollection<Int> = ArrayCollection<Int>()
+    private fun emptyCollection():MutableCollection<Int> = ArrayCollection<Int>()
     //private fun emptyCollection():MutableCollection<Int> = LinkedCollection<Int>()
     private fun emptyIterator() = emptyCollection().iterator()
     private fun addSequenceOf(start:Int, end: Int) :MutableCollection<Int>{
