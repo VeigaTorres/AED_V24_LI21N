@@ -178,7 +178,7 @@ class TestSet {
             addAll(listTest)
             val iter: Iterator<Int> = iterator()
             iter.next()
-            val exc = assertFailsWith<NoSuchElementException> { iter.next() }
+            assertFailsWith<NoSuchElementException> { iter.next() }
         }
     }
 

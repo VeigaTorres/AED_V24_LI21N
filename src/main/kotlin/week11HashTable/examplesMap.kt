@@ -5,7 +5,7 @@ import java.util.TreeMap
 import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashMap
 
-fun main(args: Array<String>){
+fun main(){
     val m= mapOf("um" to 1, "dois" to 2, "três" to 3)
     //m.put("cinco", 5) // ERROR imutavel
     println("mapOf -> s = $m")

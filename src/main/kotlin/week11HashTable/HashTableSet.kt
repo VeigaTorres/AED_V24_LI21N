@@ -15,12 +15,17 @@ class HashTableSet<K> ( capacityInitial:Int=5,
     private fun hash( hc: Int ): Int = hc.and( 0x7fff_ffff ) % capacity
 
     private fun getNode( key: K ): Node<K>? {
-        TODO()
+        val hc = key.hashCode()
+        val index =hash( hc )
+        var curr = table[index]
+        while( curr != null ) {
+            if (curr.key == key) return curr
+            curr= curr.next
+        }
+        return null
     }
 
-    fun contains(element: K): Boolean {
-        TODO()
-    }
+    fun contains(element: K): Boolean = getNode(element) != null
 
     fun add(element: K) : Boolean {
         TODO()

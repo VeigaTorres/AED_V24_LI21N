@@ -5,7 +5,7 @@ import kotlin.collections.HashSet
 import kotlin.collections.LinkedHashSet
 import java.util.TreeSet
 
-fun main(args: Array<String>){
+fun main(){
     val s= setOf(1, 7, 2, 80, 81, 0, 160)
     //s.add(4)  // ERROr imutavel
     println("setOf -> s = $s")

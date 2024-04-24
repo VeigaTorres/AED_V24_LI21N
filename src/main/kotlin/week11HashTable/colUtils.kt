@@ -4,7 +4,7 @@ import week9Collection.LinkedCollection
 import java.util.TreeSet
 
 fun listTopTen(values: Array<Int> ) {
-    val topTen = TreeSet<Int>();
+    val topTen = TreeSet<Int>()
     for( v in values ) {
         if( topTen.size < 10 ) topTen.add(v)
         else {
@@ -32,8 +32,8 @@ fun wordsThatOcurrMost( list: Collection<String> ):Set<String> {
     val maxOcurr = counts.max()
     // Remover do CONTENTOR ASSOCIATIVO, as palavras que não têm
     // o máximo de ocorrências.
-    counts.retainAll( listOf( maxOcurr ) );
-    return words.keys;
+    counts.retainAll( listOf( maxOcurr ) )
+    return words.keys
 }
 
 fun partition( c: Collection<Int>,
