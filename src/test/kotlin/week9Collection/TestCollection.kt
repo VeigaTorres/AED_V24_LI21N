@@ -138,7 +138,7 @@ class TestCollection {
     @Test
     fun test_getAndSet() {
         val col = emptyCollection()
-/*        if ( col is ArrayCollection) {
+        if ( col is ArrayCollection) {
                 col.addAll( listOf(1, 2, 3, 4) )
                 assertEquals(1, col[0])
                 assertEquals(4, col[3])
@@ -148,6 +148,5 @@ class TestCollection {
                 assertEquals(0, col[0])
                 assertEquals(3, col[3])
         }
- */
     }
 }
