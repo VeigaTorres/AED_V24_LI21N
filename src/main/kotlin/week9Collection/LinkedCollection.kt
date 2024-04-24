@@ -19,7 +19,9 @@ class LinkedCollection<E> : MutableCollection<E> {
     override val size get() = count
     override fun isEmpty(): Boolean = count == 0
     override fun clear() {
-        TODO()
+        head.next = head
+        head.prev = head
+        count = 0
     }
 
     /**
@@ -41,15 +43,19 @@ class LinkedCollection<E> : MutableCollection<E> {
         ++count
         return makeNode(suc, e)
     }
-    fun addFirst(e: E) { TODO()   }
-    fun addLast(e: E)  { TODO()   }
+    fun addFirst(e: E) {
+        addNode(head.next, e)
+    }
+    fun addLast(e: E)  {
+        addNode( head, e)
+    }
     override fun add(element: E): Boolean {
         addLast( element )
         return true
     }
     override fun addAll(elements: Collection<E>): Boolean {
-       TODO()
-       return !elements.isEmpty()
+       elements.forEach { add(it) }
+       return elements.isNotEmpty()
     }
 
     /**
@@ -65,19 +71,23 @@ class LinkedCollection<E> : MutableCollection<E> {
         return n
     }
     override fun remove(element: E): Boolean {
-        TODO()
+        val n = getNode( element )
+        if ( n == null ) return false
+        removeNode( n )
+        return true
     }
+
     fun removeFirst(): E {
         check(!isEmpty())
-        TODO()
+        return removeNode(head.next).value
     }
     fun removeLast(): E {
         check(isNotEmpty())
-        TODO()
+        return removeNode( head.prev).value
     }
-    fun removeIf( pred: (e: E)-> Boolean): Boolean { TODO() }
+    //fun removeIf( pred: (e: E)-> Boolean): Boolean { TODO() }
     override fun removeAll(elements: Collection<E>): Boolean
-            = removeIf { elements.contains(it) }
+            = removeIf{ elements.contains(it)}
     override fun retainAll(elements: Collection<E>): Boolean
             = removeIf { !elements.contains(it) }
 
@@ -92,9 +102,9 @@ class LinkedCollection<E> : MutableCollection<E> {
         }
         return null
     }
-    override fun contains(element: E)
-        = getNode(element) != null
-    override fun containsAll(elements: Collection<E>): Boolean = TODO()
+    override fun contains(element: E) = getNode(element) != null
+    override fun containsAll(elements: Collection<E>): Boolean =
+        elements.all{ contains( it ) }
 
     /**
      * Iterator
@@ -102,13 +112,20 @@ class LinkedCollection<E> : MutableCollection<E> {
     override fun iterator(): MutableIterator<E> =
         object: MutableIterator<E> {
             var last = head
+            var flagNext = false
             override fun hasNext(): Boolean = last.next!=head
             override fun next(): E {
                 if (!hasNext()) throw NoSuchElementException()
+                flagNext = true
                 last = last.next
                 return last.value
             }
-            override fun remove() { TODO() }
+            override fun remove() {
+                check( flagNext ){"can’t remove"}
+                removeNode(last)
+                last = last.prev
+                flagNext= false
+            }
         }
 
     /**
