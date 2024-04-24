@@ -87,7 +87,7 @@ class LinkedCollection<E> : MutableCollection<E> {
     }
     //fun removeIf( pred: (e: E)-> Boolean): Boolean { TODO() }
     override fun removeAll(elements: Collection<E>): Boolean
-            = removeIf{ elements.contains(it)}
+            = removeIf{ elements.contains(it) }
     override fun retainAll(elements: Collection<E>): Boolean
             = removeIf { !elements.contains(it) }
 
