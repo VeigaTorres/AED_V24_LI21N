@@ -40,8 +40,8 @@ class TestCollection {
         if ( c is LinkedCollection) {
             c.addAll( testList )
             assertEquals(testList[testList.lastIndex], c.getLast())
-            c.removeFirst()
-            assertEquals(testList[testList.lastIndex], c.getLast())
+            c.removeLast()
+            assertEquals(testList[testList.lastIndex-1], c.getLast())
             assertEquals(testList.size-1, c.size)
         }
     }
