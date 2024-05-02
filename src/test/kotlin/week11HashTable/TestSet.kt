@@ -202,7 +202,7 @@ class TestSet {
             iterator().run {
                 next()
                 remove()
-                val exc = assertFailsWith<IllegalStateException> { remove() }
+                assertFailsWith<IllegalStateException> { remove() }
             }
         }
     }
