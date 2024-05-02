@@ -35,7 +35,7 @@ class HashTableSet<K> ( capacityInitial:Int=5,
         val index =hash( hc )
         var curr = table[index]
         while( curr != null ) {
-            if (curr.key == key) return curr
+            if (hc == curr.hc && curr.key == key) return curr
             curr= curr.next
         }
         return null
@@ -61,7 +61,7 @@ class HashTableSet<K> ( capacityInitial:Int=5,
         var curr = table[index]
         var prev: Node<K>? = null
         while ( curr != null ) {
-            if ( hc == curr.key && curr.key == element ) {
+            if ( hc == curr.hc && curr.key == element ) {
                 if ( prev == null ) table[index] = curr.next
                 else prev.next= curr.next
                 --count
