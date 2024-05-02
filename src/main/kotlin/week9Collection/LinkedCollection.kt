@@ -85,7 +85,21 @@ class LinkedCollection<E> : MutableCollection<E> {
         check(isNotEmpty())
         return removeNode( head.prev).value
     }
-    //fun removeIf( pred: (e: E)-> Boolean): Boolean { TODO() }
+
+    fun removeIf( pred: (e: E)-> Boolean): Boolean {
+        var curr = head.next
+        var removed = false
+        while ( curr != head ) {
+            if (pred( curr.value )) {
+                val n = curr
+                curr= curr.next
+                removeNode(n)
+                removed= true
+            }
+            else curr= curr.next
+        }
+        return removed
+    }
     override fun removeAll(elements: Collection<E>): Boolean
             = removeIf{ elements.contains(it) }
     override fun retainAll(elements: Collection<E>): Boolean
@@ -106,6 +120,15 @@ class LinkedCollection<E> : MutableCollection<E> {
     override fun containsAll(elements: Collection<E>): Boolean =
         elements.all{ contains( it ) }
 
+    fun getFirst() : E {
+        check( isNotEmpty() )
+        return head.next.value
+    }
+
+    fun getLast() : E {
+        check( isNotEmpty() )
+        return head.prev.value
+    }
     /**
      * Iterator
      */

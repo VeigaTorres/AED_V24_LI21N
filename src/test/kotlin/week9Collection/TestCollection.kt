@@ -21,6 +21,33 @@ class TestCollection {
     }
 
     @Test
+    fun test_removeFirst() {
+        val testList = listOf(1, 2, 3, 4, 5)
+        val c: Collection<Int> = emptyCollection()
+        if ( c is LinkedCollection) {
+            c.addAll( testList )
+            assertEquals(testList[0], c.getFirst())
+            c.removeFirst()
+            assertEquals(testList[1], c.getFirst())
+            assertEquals(testList.size-1, c.size)
+        }
+    }
+
+    @Test
+    fun test_removeLast() {
+        val testList = listOf(1, 2, 3, 4, 5)
+        val c: Collection<Int> = emptyCollection()
+        if ( c is LinkedCollection) {
+            c.addAll( testList )
+            assertEquals(testList[testList.lastIndex], c.getLast())
+            c.removeFirst()
+            assertEquals(testList[testList.lastIndex], c.getLast())
+            assertEquals(testList.size-1, c.size)
+        }
+    }
+
+
+    @Test
     fun test_emptyIterator() {
         val it: Iterator<Int> = emptyIterator()
         assertFalse(it.hasNext())
