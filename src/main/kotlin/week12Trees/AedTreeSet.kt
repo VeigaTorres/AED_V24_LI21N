@@ -4,6 +4,8 @@ import week7ADT.queue.LinkedQueue
 import week7ADT.queue.Queue
 import kotlin.Comparator
 import kotlin.NoSuchElementException
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Implementation of a MutableSet using a binary search tree.
@@ -35,7 +37,10 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @return number of keys
      */
     private fun count(r: TreeNode<K>? = root): Int {
-        TODO()
+        if (r== null) return 0
+        val nl = count(r.left)
+        val nr = count(r.right)
+        return nl + nr +1
     }
 
     /**
@@ -46,7 +51,10 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @return height of the tree
     */
     private fun height( r: TreeNode<K>? = root): Int {
-        TODO()
+        if ( r == null ) return -1
+        val hl = height(r.left)
+        val hr = height(r.right)
+        return 1 + max(hl, hr)
     }
 
     /**
@@ -56,8 +64,15 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> tipo da chave
      * @return the node whose key is key
      */
-    private fun getNode(root: TreeNode<K>?, key: K): TreeNode<K>? {
-          TODO()
+    private fun getNode(r: TreeNode<K>?, key: K): TreeNode<K>? {
+        var root = r
+        while (root != null ) {
+            val cmp = comparator.compare( root.key, key )
+            if (cmp == 0) return root
+            root = if( cmp < 0 ) root.right
+                   else root.left
+        }
+        return null
     }
 
     /**
@@ -67,7 +82,21 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @return true if the key is added, false otherwise
      */
     private fun addNode( key: K ): Boolean {
-        TODO()
+        var p: TreeNode<K>?= null
+        var r = root
+        var cmp= 0
+        while ( r != null ){
+            cmp = comparator.compare(r.key, key)
+            if ( cmp == 0 ) return false
+            p = r
+            r = if(cmp < 0 ) r.right else r.left
+        }
+        val newNode = TreeNode( key, null, null, p)
+        if ( p == null ) root= newNode
+        else {
+            if ( cmp < 0 ) p.right = newNode
+            else p.left = newNode
+        }
         ++count
         return true
     }
@@ -78,8 +107,14 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> type of the key
      * @return node whose key is the smallest
      */
-    private fun minimum( r: TreeNode<K> ): TreeNode<K> {
-        TODO()
+    private fun minimum( root: TreeNode<K> ): TreeNode<K> {
+        var min= root
+        var r = min.left
+        while ( r != null ) {
+           min = r
+           r = r.left
+        }
+        return min
     }
 
     /**
@@ -89,7 +124,13 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @return node whose key is the largest
      */
     private fun maximum(root: TreeNode<K>): TreeNode<K> {
-        TODO()
+        var max= root
+        var r = max.right
+        while ( r != null ) {
+            max = r
+            r = r.right
+        }
+        return max
     }
 
     /**
@@ -98,7 +139,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> type of the key
      * @return node whose key is immediately greater
      */
-    private fun sucessor(r: TreeNode<K>): TreeNode<K>? {
+    private fun sucessor(root: TreeNode<K>): TreeNode<K>? {
         TODO()
     }
 
@@ -107,7 +148,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param z node to remove
      * @param <K> type of the key
      */
-    private fun removeNode( z: TreeNode<K>) {
+    private fun removeNode( z: TreeNode<K> ) {
         TODO()
         --count
     }
