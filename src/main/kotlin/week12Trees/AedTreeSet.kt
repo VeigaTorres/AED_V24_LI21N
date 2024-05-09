@@ -31,7 +31,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * Count the number of keys.
      * The number of keys is the sum of the number of keys of the
      * subtree left and right plus one.
-     * @param root root of the tree
+     * @param r root of the tree
      * @param <K> type of the key
      * @return number of keys
      */
@@ -45,7 +45,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
     /**
      * Calculate the height of the tree.
      * The height is the maximum of the heights of the subtrees plus one.
-     * @param root root of the tree
+     * @param r root of the tree
      * @param <K> type of the key
      * @return height of the tree
     */
@@ -58,7 +58,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
 
     /**
      * Search for a node with key is key.
-     * @param root root of the tree
+     * @param r root of the tree
      * @param key value to search
      * @param <K> tipo da chave
      * @return the node whose key is key
@@ -118,7 +118,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
 
     /**
      * Get the node with the largest key
-     * @param r root of the tree
+     * @param root root of the tree
      * @param <K> type of the key
      * @return node whose key is the largest
      */
@@ -134,7 +134,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
 
     /**
      * Get the node whose key is immediately greater
-     * @param r root of the tree
+     * @param root root of the tree
      * @param <K> type of the key
      * @return node whose key is immediately greater
      */
