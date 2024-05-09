@@ -31,6 +31,7 @@ fun printPrefix(n: NodeExp?){
     printPrefix( n.left )
     printPrefix( n.right )
 }
+
 fun printInfix(n: NodeExp) {
     n.left?.let {
         print('(')

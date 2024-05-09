@@ -1,11 +1,12 @@
 package week11HashTable
 
+import week12Trees.AedTreeSet
 import kotlin.test.*
 
 class TestSet {
     private fun getSet(): MutableSet<Int> {
-        //return AedTreeSet(Comparator.naturalOrder())
-        return HashTableSet()
+        return AedTreeSet(Comparator.naturalOrder())
+        //return HashTableSet()
         //return HashSet<Int>()
     }
 

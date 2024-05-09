@@ -5,7 +5,6 @@ import week7ADT.queue.Queue
 import kotlin.Comparator
 import kotlin.NoSuchElementException
 import kotlin.math.max
-import kotlin.math.min
 
 /**
  * Implementation of a MutableSet using a binary search tree.
@@ -22,7 +21,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
     private var root: TreeNode<K>? = null // root of the tree
 
     private var count = 0                 // number of elements in the tree
-    override val size: Int = count
+    override val size: Int get() = count
 
     /******************************
      * AUXILIARY METHODS
@@ -36,10 +35,10 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> type of the key
      * @return number of keys
      */
-    private fun count(r: TreeNode<K>? = root): Int {
+    private fun countElements(r: TreeNode<K>? = root): Int {
         if (r== null) return 0
-        val nl = count(r.left)
-        val nr = count(r.right)
+        val nl = countElements(r.left)
+        val nr = countElements(r.right)
         return nl + nr +1
     }
 
@@ -66,7 +65,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      */
     private fun getNode(r: TreeNode<K>?, key: K): TreeNode<K>? {
         var root = r
-        while (root != null ) {
+        while ( root != null ) {
             val cmp = comparator.compare( root.key, key )
             if (cmp == 0) return root
             root = if( cmp < 0 ) root.right
@@ -140,7 +139,16 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @return node whose key is immediately greater
      */
     private fun sucessor(root: TreeNode<K>): TreeNode<K>? {
-        TODO()
+
+        root.right?.let{ return minimum( it )}
+
+        var r = root
+        var parent = root.parent
+        while ( parent != null && parent.right === r) {
+            r= parent
+            parent = r.parent
+        }
+        return parent
     }
 
     /**
@@ -149,7 +157,24 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> type of the key
      */
     private fun removeNode( z: TreeNode<K> ) {
-        TODO()
+        var nodeToRemove: TreeNode<K>
+        var r= z.right
+        if ( z.left != null && r != null) {
+            nodeToRemove = minimum( r )
+            z.key = nodeToRemove.key
+        }
+        else
+            nodeToRemove = z
+
+        var parent = nodeToRemove.parent
+        var child = if(nodeToRemove.left != null ) nodeToRemove.left else nodeToRemove.right
+        child?.parent= parent
+        if ( parent != null) {
+            if (nodeToRemove === parent.right)parent.right = child
+            else parent.left = child
+        }
+        else
+            root = child
         --count
     }
 
@@ -159,36 +184,51 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
     override fun isEmpty(): Boolean = size == 0
     override fun add(element: K): Boolean = addNode( element )
     override fun remove(element: K): Boolean {
-       TODO()
+       getNode( root, element )?.let{
+           removeNode( it)
+           return true
+       }
+       return  false
     }
     override fun contains(element: K): Boolean = getNode( root, element )!= null
     override fun clear() {
-        TODO()
+        root = null
+        count = 0
     }
     override fun addAll(elements: Collection<K>): Boolean {
         var b = false
-        elements.forEach { if( add(it) ) b = true }
+        elements.forEach { if(add(it)) b= true  }
         return b
     }
     override fun containsAll(elements: Collection<K>): Boolean =
         elements.all { contains( it ) }
     override fun removeAll(elements: Collection<K>): Boolean =
-        removeIf {!elements.contains( it) }
+        removeIf { elements.contains( it) }
     override fun retainAll(elements: Collection<K>): Boolean =
         removeIf {!elements.contains( it) }
     override fun iterator() : MutableIterator<K> =
         object : MutableIterator<K> {
-           override fun hasNext() = TODO()
-           override fun next(): K {
-            TODO()
-           }
+           var curr:TreeNode<K>? = root?.let{ minimum( it ) }
+           var lastNext: TreeNode<K>? = null
+           override fun hasNext() = curr != null
+           override fun next(): K =
+                (curr?:throw NoSuchElementException("")).also{
+                   curr= sucessor( it )
+                   lastNext= it
+               }.key
+
            override fun remove() {
-             TODO()
+               checkNotNull(lastNext){"not have next() before"}.let{
+                   if(it.left != null && it.right != null)
+                       curr = it
+                   removeNode( it )
+                   lastNext= null
+               }
            }
         }
 
     override fun toString() =
-        this.joinToString(prefix="[", postfix = "]")
+        this.joinToString(separator = ", ", prefix="[", postfix = "]")
 
     /******************************
      * Methods added to the TreeSet
@@ -213,7 +253,20 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
     /** Get the height of the tree. */
     fun height() = height( root )
 
-     /**
+    /**
+     * Iterate over the elements of the tree in breadth-first order.
+     * Use a queue as an auxiliary (FIFO ordering). Use the methods:
+     *  offer - add to the end
+     *  poll  - remove to the begin
+     **/
+    fun transverseBreadthFirst( action: (k:K) -> Unit ) {
+        root?.let {
+            val q: Queue<TreeNode<K>> = LinkedQueue()
+            TODO()
+        }
+    }
+
+    /**
      * Methods for balancing the tree
      */
 
@@ -224,12 +277,12 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * The nodes of the list are TreeNode and the right field of the tree node
      * is the next of the single linked list.
      * @param root root of the tree
-     * @param head reference to the first node of the single linked list
+     * @param head node sentinel of single linked list
      * @param <K> type of the key
      * @return the first node of the single linked list after adding all
      *         the elements of the tree
      */
-    private fun treeToList(root: TreeNode<K>?, head: TreeNode<K>? = null): TreeNode<K>? {
+    private fun treeToList(root: TreeNode<K>?, sentinel: TreeNode<K>) {
         TODO()
     }
 
@@ -267,19 +320,6 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
     /** Balance the tree. */
     fun balance() {
         root = root?.let{ balance(it) }
-    }
-
-    /**
-     * Iterate over the elements of the tree in breadth-first order.
-     * Use a queue as an auxiliary (FIFO ordering). Use the methods:
-     *  offer - add to the end
-     *  poll  - remove to the begin
-     **/
-    fun transverseBreadthFirst( action: (k:K) -> Unit ) {
-        root?.let {
-            val q: Queue<TreeNode<K>> = LinkedQueue()
-            TODO()
-        }
     }
 
  }
