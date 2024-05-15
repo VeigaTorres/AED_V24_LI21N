@@ -45,6 +45,7 @@ class TestTree {
             assertEquals("1 2 3 ", str.toString())
             balance()
             assertEquals(3, size)
+            assertEquals(3, count())
             assertEquals(1, first())
             assertEquals(3, last())
             assertEquals(1, height())
@@ -62,6 +63,7 @@ class TestTree {
             addAll(listOf(1, 2, 3))
             balance()
             assertEquals(3, size)
+            assertEquals(3, count())
             assertEquals(1, first())
             assertEquals(3, last())
             assertEquals(1, height())
@@ -78,6 +80,7 @@ class TestTree {
         getSet().run {
             addAll(listOf(1, 2, 3, 4, 5, 6, 7))
             assertEquals(7, size)
+            assertEquals(7, count())
             assertEquals(1, first())
             assertEquals(7, last())
             assertEquals(6, height())

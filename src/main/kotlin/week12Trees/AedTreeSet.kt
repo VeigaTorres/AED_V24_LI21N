@@ -36,11 +36,14 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> type of the key
      * @return number of keys
      */
-    private fun countElements(r: TreeNode<K>? = root): Int {
-        if (r == null) return 0
-        val nl = countElements(r.left)
-        val nr = countElements(r.right)
-        return nl + nr + 1
+    fun count() : Int{
+        fun countElements(r: TreeNode<K>? = root): Int {
+            if (r == null) return 0
+            val nl = countElements(r.left)
+            val nr = countElements(r.right)
+            return nl + nr + 1
+        }
+        return countElements(root)
     }
 
     /**
