@@ -32,7 +32,6 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * Count the number of keys.
      * The number of keys is the sum of the number of keys of the
      * subtree left and right plus one.
-     * @param r root of the tree
      * @param <K> type of the key
      * @return number of keys
      */
