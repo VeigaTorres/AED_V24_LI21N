@@ -158,16 +158,16 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> type of the key
      */
     private fun removeNode(z: TreeNode<K>) {
-        var nodeToRemove: TreeNode<K>
-        var r = z.right
+        val nodeToRemove: TreeNode<K>
+        val r = z.right
         if (z.left != null && r != null) {
             nodeToRemove = minimum(r)
             z.key = nodeToRemove.key
         } else
             nodeToRemove = z
 
-        var parent = nodeToRemove.parent
-        var child = if (nodeToRemove.left != null) nodeToRemove.left else nodeToRemove.right
+        val parent = nodeToRemove.parent
+        val child = if (nodeToRemove.left != null) nodeToRemove.left else nodeToRemove.right
         child?.parent = parent
         if (parent != null) {
             if (nodeToRemove === parent.right) parent.right = child
@@ -269,7 +269,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
             val q: Queue<TreeNode<K>> = LinkedQueue()
             q.offer(it)
             while (!q.isEmpty()) {
-                val n = q.poll();
+                val n = q.poll()
                 action(n.key)
                 n.left?.let { q.offer(it) }
                 n.right?.let { q.offer(it) }
@@ -288,7 +288,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * The nodes of the list are TreeNode and the right field of the tree node
      * is the next of the single linked list.
      * @param root root of the tree
-     * @param head node sentinel of single linked list
+     * @param sentinel node sentinel of single linked list
      * @param <K> type of the key
      * @return the first node of the single linked list after adding all
      *         the elements of the tree
@@ -361,7 +361,7 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
 
 }
     fun main() {
-        var tree = AedTreeSet<Int>(Comparator.naturalOrder())
+        val tree = AedTreeSet<Int>(Comparator.naturalOrder())
         tree.addAll( listOf(1, 2, 3, 4, 5, 6, 7) )
         println( tree )
         tree.transverseBreadthFirst { print("$it ") }
