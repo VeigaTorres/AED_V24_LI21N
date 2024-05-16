@@ -1,7 +1,5 @@
 package week12Trees
 
-import kotlin.math.min
-
 class AedTreeNode<T>(
     val value: T,
     var left: AedTreeNode<T>? = null,
@@ -16,7 +14,10 @@ class AedTreeNode<T>(
  * @return number of nodes until the level k
  */
 fun countNodesUntilLevel(root:AedTreeNode<Int>?, k:Int):Int {
-    TODO()
+    if( root == null ) return 0
+    if ( k == 0 ) return 1
+    return 1+ countNodesUntilLevel(root.left, k-1)+
+              countNodesUntilLevel(root.right, k-1)
 }
 
 /**
@@ -24,11 +25,14 @@ fun countNodesUntilLevel(root:AedTreeNode<Int>?, k:Int):Int {
  * are siblings. Two nodes are siblings if they have the same parent.
  * @param root root of the binary search tree without repeated values
  * @param a value of the left node
- * @param b key of the right node
+ * @param b value of the right node
  * @return true if the values exist in nodes siblings, false otherwise
  */
-private fun areSiblingsInBST(root: AedTreeNode<Int>?, a:Int, b:Int):Boolean {
-    TODO()
+fun areSiblingsInBST(root: AedTreeNode<Int>?, a:Int, b:Int):Boolean {
+    if ( root == null ) return false
+    if ( root.left?.value== a && root.right?.value == b) return true
+    return ( root.value > b && areSiblingsInBST(root.left, a, b )) ||
+            (root.value < a && areSiblingsInBST(root.right, a, b))
 }
 
 /**
@@ -39,7 +43,12 @@ private fun areSiblingsInBST(root: AedTreeNode<Int>?, a:Int, b:Int):Boolean {
  * @return root of the binary search tree
  */
 fun createBSTFromRange(start:Int, end:Int): AedTreeNode<Int>? {
-    TODO()
+    if ( end < start ) return null
+    val m = (end+start).shr( 1)
+    val root = AedTreeNode<Int>( m )
+    root.left = createBSTFromRange(start, m-1)
+    root.right = createBSTFromRange(m+1, end)
+    return root
 }
 
 /**
@@ -48,7 +57,16 @@ fun createBSTFromRange(start:Int, end:Int): AedTreeNode<Int>? {
  * @return n-th element of the tree
  */
 fun <T> nesimo( root: AedTreeNode<T>?, n: Int ) : T {
-    TODO()
+     var count = 0
+     fun nesimo( root: AedTreeNode<T>? ): AedTreeNode<T>? {
+         if ( root == null ) return null
+         val node = nesimo( root.left )
+         if (node != null) return node
+         ++ count
+         if ( count == n ) return root
+         return nesimo(root.right)
+     }
+    return (nesimo(root)?: throw NoSuchElementException("")).value
 }
 
 /**
