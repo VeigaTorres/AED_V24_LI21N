@@ -4,6 +4,7 @@ import week7ADT.queue.LinkedQueue
 import week7ADT.queue.Queue
 import kotlin.Comparator
 import kotlin.NoSuchElementException
+import kotlin.math.abs
 import kotlin.math.max
 
 /**
@@ -35,14 +36,15 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
      * @param <K> type of the key
      * @return number of keys
      */
-    fun count() : Int{
-        fun countElements(r: TreeNode<K>? = root): Int {
-            if (r == null) return 0
-            val nl = countElements(r.left)
-            val nr = countElements(r.right)
-            return nl + nr + 1
-        }
+    fun count(): Int {
         return countElements(root)
+    }
+
+    private fun countElements(r: TreeNode<K>? = root): Int {
+        if (r == null) return 0
+        val nl = countElements(r.left)
+        val nr = countElements(r.right)
+        return nl + nr + 1
     }
 
     /**
@@ -358,16 +360,27 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
     }
 
     fun isBalanced(): Boolean {
-        TODO()
+        fun isBalanced(root: TreeNode<K>?): Int {
+            if (root == null) return 0
+            val hl = isBalanced(root.left)
+            if (hl >= 0) {
+                val hr = isBalanced(root.right)
+                if (hr >= 0 && abs(hl - hr) < 2)
+                    return 1 + max(hl, hr)
+            }
+            return -1
+        }
+        return isBalanced(root) >= 0
     }
 
-}
+
     fun main() {
         val tree = AedTreeSet<Int>(Comparator.naturalOrder())
-        tree.addAll( listOf(1, 2, 3, 4, 5, 6, 7) )
-        println( tree )
+        tree.addAll(listOf(1, 2, 3, 4, 5, 6, 7))
+        println(tree)
         tree.transverseBreadthFirst { print("$it ") }
         println()
         tree.balance()
         tree.transverseBreadthFirst { print("$it ") }
     }
+}
