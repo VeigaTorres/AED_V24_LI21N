@@ -373,8 +373,9 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
         return isBalanced(root) >= 0
     }
 
+}
 
-    fun main() {
+fun main() {
         val tree = AedTreeSet<Int>(Comparator.naturalOrder())
         tree.addAll(listOf(1, 2, 3, 4, 5, 6, 7))
         println(tree)
@@ -382,5 +383,6 @@ class AedTreeSet<K>( val comparator: Comparator<K> ) : MutableSet<K> {
         println()
         tree.balance()
         tree.transverseBreadthFirst { print("$it ") }
-    }
+        println(tree.isBalanced())
 }
+
